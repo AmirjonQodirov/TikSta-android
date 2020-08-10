@@ -1,12 +1,16 @@
-package com.tiksta.test4
+package com.tiksta.test4.base
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.tiksta.test4.R
+import com.tiksta.test4.blog.BlogActivity
+import com.tiksta.test4.home.HomeActivity
+import com.tiksta.test4.info.InfoActivity
+import com.tiksta.test4.post.PostActivity
 
 abstract class BaseActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
@@ -52,7 +56,6 @@ abstract class BaseActivity : AppCompatActivity(),
     }
 
     private fun updateNavigationBarState() {
-//        val actionId: Int = getNavigationMenuItemId()
         selectBottomNavigationBarItem(this.bottomNavigationMenuItemId)
     }
 
@@ -61,9 +64,9 @@ abstract class BaseActivity : AppCompatActivity(),
         item.isChecked = true
     }
 
-    // this is to return which layout(activity) needs to display when clicked on tabs.
+    // this is to return which layout (activity) needs to display when clicked on tabs.
     abstract val layoutId: Int
 
-    //Which menu item selected and change the state of that menu item
+    // Which menu item selected and change the state of that menu item
     abstract val bottomNavigationMenuItemId: Int
 }

@@ -1,4 +1,7 @@
-package com.tiksta.test4
+package com.tiksta.test4.home
+
+import com.tiksta.test4.base.BaseActivity
+import com.tiksta.test4.R
 
 class HomeActivity : BaseActivity() {
     override val layoutId: Int

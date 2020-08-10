@@ -1,4 +1,4 @@
-package com.tiksta.test4
+package com.tiksta.test4.post
 
 import androidx.lifecycle.ViewModel
 

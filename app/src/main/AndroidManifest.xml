@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity">
+        <activity android:name=".home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,11 +17,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PostActivity" />
+        <activity android:name=".post.PostActivity" />
 
-        <activity android:name=".BlogActivity" />
+        <activity android:name=".blog.BlogActivity" />
 
-        <activity android:name=".InfoActivity" />
+        <activity android:name=".info.InfoActivity" />
     </application>
 
 </manifest>

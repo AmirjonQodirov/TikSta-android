@@ -1,9 +1,11 @@
-package com.tiksta.test4
+package com.tiksta.test4.post
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import com.tiksta.test4.base.BaseActivity
+import com.tiksta.test4.R
 import kotlinx.android.synthetic.main.activity_post_tabs.*
 
 class PostActivity : BaseActivity() {
@@ -23,16 +25,13 @@ class PostActivity : BaseActivity() {
 
         viewPager = findViewById(R.id.pager)
         adapter = ViewPagerAdapter(supportFragmentManager)
-
         viewPager.adapter = adapter
 
         tabLayout = findViewById(R.id.tabs)
-
         tabLayout.setupWithViewPager(pager)
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                println("Posts: " + tab.position)
                 Utils.setTabPosition(tab.position)
             }
 
@@ -42,10 +41,6 @@ class PostActivity : BaseActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
-
-//        Utils.getSubmitButton()?.setOnClickListener {
-//            Utils.setTabPosition(tabLayout.selectedTabPosition)
-//        }
     }
 }
 

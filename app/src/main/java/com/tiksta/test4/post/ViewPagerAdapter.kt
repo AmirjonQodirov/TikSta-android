@@ -1,4 +1,4 @@
-package com.tiksta.test4
+package com.tiksta.test4.post
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -8,7 +8,6 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     private val titles = arrayOf("TikTok", "Instagram")
 
     override fun getItem(position: Int): Fragment {
-//        Toast.makeText(this, )
         return BlankFragment()
     }
 
@@ -17,8 +16,6 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-//        Utils.setTabPosition(position)
-//        println(position)
         return titles[position]
     }
 }
