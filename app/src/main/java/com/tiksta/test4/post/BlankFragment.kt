@@ -50,6 +50,7 @@ class BlankFragment : Fragment() {
                 result.text = getString(R.string.instagram)
             }
         }
+
         return view
     }
 
