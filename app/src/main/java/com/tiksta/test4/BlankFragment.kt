@@ -51,7 +51,6 @@ class BlankFragment : Fragment() {
 
         button.setOnClickListener {
             var tabPosition = Utils.getTabPosition()
-            println("Blank: " + tabPosition)
 //            println("Button clicked")
             var result : TextView = view.findViewById(R.id.result)
             if (tabPosition == 0) {
