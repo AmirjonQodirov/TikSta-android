@@ -46,8 +46,6 @@ class BlankFragment : Fragment() {
 
 //        var tabLayout : TabLayout = view.findViewById(R.id.tabs)
         val button : Button = view.findViewById(R.id.submit_button)
-//        Utils.setSubmitButton(button)
-        println("changed tab")
 
         button.setOnClickListener {
             var tabPosition = Utils.getTabPosition()
