@@ -7,9 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Switch
-import android.widget.Toast
+import android.widget.*
+import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.activity_post_filling.*
+import kotlinx.android.synthetic.main.activity_post_tabs.*
 
 class BlankFragment : Fragment() {
 
@@ -40,6 +41,23 @@ class BlankFragment : Fragment() {
 //                Toast.makeText(this, "UnChecked", Toast.LENGTH_LONG).show()
                 ed.visibility = View.GONE
                 sw.visibility = View.GONE
+            }
+        }
+
+//        var tabLayout : TabLayout = view.findViewById(R.id.tabs)
+        val button : Button = view.findViewById(R.id.submit_button)
+//        Utils.setSubmitButton(button)
+        println("changed tab")
+
+        button.setOnClickListener {
+            var tabPosition = Utils.getTabPosition()
+            println("Blank: " + tabPosition)
+//            println("Button clicked")
+            var result : TextView = view.findViewById(R.id.result)
+            if (tabPosition == 0) {
+                result.text = "TikTok"
+            } else {
+                result.text = "Instagram"
             }
         }
 

@@ -2,11 +2,6 @@ package com.tiksta.test4
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Switch
-import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_post_tabs.*
@@ -34,6 +29,23 @@ class PostActivity : BaseActivity() {
         tabLayout = findViewById(R.id.tabs)
 
         tabLayout.setupWithViewPager(pager)
+
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                println("Posts: " + tab.position)
+                Utils.setTabPosition(tab.position)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+
+//        Utils.getSubmitButton()?.setOnClickListener {
+//            Utils.setTabPosition(tabLayout.selectedTabPosition)
+//        }
     }
 }
 
