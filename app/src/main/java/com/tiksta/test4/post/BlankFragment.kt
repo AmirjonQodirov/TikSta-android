@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 import com.tiksta.test4.R
+import com.tiksta.test4.post.data.DataBaseHandler
+import kotlinx.android.synthetic.main.activity_post_filling.*
 
 class BlankFragment : Fragment() {
     private lateinit var viewModel: BlankViewModel
@@ -41,14 +43,30 @@ class BlankFragment : Fragment() {
         val submitButton: Button = view.findViewById(R.id.submit_button)
 
         submitButton.setOnClickListener {
+            val context = activity
+            var db = context?.let { it1 -> DataBaseHandler(it1) }
             val tabPosition = Utils.getTabPosition()
-            val result: TextView = view.findViewById(R.id.result)
 
+            var platform = "instagram_id"
             if (tabPosition == 0) {
-                result.text = getString(R.string.tiktok)
-            } else {
-                result.text = getString(R.string.instagram)
+                platform = "tiktok_id"
             }
+            var data = db?.readData(editTextTag.text.toString(),platform)
+
+
+//            if (data == null) {
+//                // TODO
+//            } else {
+//
+//                for (i in 0 until data.size) {
+//
+//                    tagRes.append(data[i] + "\n")
+//                }
+//                tagRes.append("Usyo")
+//            }
+            val recyclerView = view.findViewById(R.id.list) as RecyclerView
+            val adapter = DataAdapter(activity, data)
+            recyclerView.adapter = adapter
         }
 
         return view

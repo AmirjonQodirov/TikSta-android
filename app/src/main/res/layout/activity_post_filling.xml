@@ -10,13 +10,13 @@
         android:id="@+id/post_length"
         android:layout_width="413dp"
         android:layout_height="77dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:text="Want us to consider the length of your post in our calculations?"
         android:thumbTint="@color/colorPrimaryDark"
         android:trackTint="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml"
-        tools:layout_editor_absoluteX="-1dp" />
+        tools:layout_editor_absoluteX="0dp" />
 
     <Switch
         android:id="@+id/post_display"
@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button"
         android:text="Submit"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,16 +74,31 @@
         app:layout_constraintTop_toBottomOf="@+id/post_length"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="63dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="68dp"
-        android:text=""
+
+    <ScrollView
+        android:id="@+id/scrollView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submit_button"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:layout_editor_absoluteX="26dp">
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/tagRes"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:background="@drawable/result_tag" />-->
+    </ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

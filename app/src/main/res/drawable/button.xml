@@ -4,8 +4,8 @@
     >
 
     <gradient
-        android:startColor="@android:color/holo_green_dark"
-        android:endColor="@android:color/holo_blue_bright"
+        android:startColor="@color/colorPrimary"
+        android:endColor="@color/colorPrimaryDark"
         />
 
     <corners
