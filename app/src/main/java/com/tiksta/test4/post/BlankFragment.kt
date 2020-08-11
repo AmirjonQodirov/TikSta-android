@@ -10,7 +10,6 @@ import android.widget.EditText
 import android.widget.Switch
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.RecyclerView
 import com.tiksta.test4.R
 import com.tiksta.test4.post.data.DataBaseHandler
 import kotlinx.android.synthetic.main.activity_post_filling.*
@@ -64,9 +63,6 @@ class BlankFragment : Fragment() {
 //                }
 //                tagRes.append("Usyo")
 //            }
-            val recyclerView = view.findViewById(R.id.list) as RecyclerView
-            val adapter = DataAdapter(activity, data)
-            recyclerView.adapter = adapter
         }
 
         return view

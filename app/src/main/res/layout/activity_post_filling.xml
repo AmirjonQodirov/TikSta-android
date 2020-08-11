@@ -74,31 +74,55 @@
         app:layout_constraintTop_toBottomOf="@+id/post_length"
         tools:ignore="MissingConstraints" />
 
+<!--    <com.google.android.material.chip.ChipGroup-->
+<!--        android:id="@+id/chipGroup"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
 
-    <ScrollView
-        android:id="@+id/scrollView4"
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/submit_button"-->
+<!--        app:layout_constraintVertical_bias="0.077"-->
+<!--        tools:layout_editor_absoluteX="0dp" >-->
+
+
+    <!--    </com.google.android.material.chip.ChipGroup>-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submit_button"
-        tools:layout_editor_absoluteX="26dp">
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="391dp">
+
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipText="Default" />
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipText="Entry" />
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipText="Choice" />
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipText="Action" />
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipText="Filter" />
 
 
-<!--        <TextView-->
-<!--            android:id="@+id/tagRes"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            android:background="@drawable/result_tag" />-->
-    </ScrollView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
-        app:layoutManager="LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
