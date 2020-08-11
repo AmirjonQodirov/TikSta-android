@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<com.google.android.material.chip.Chip-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:id="@+id/chipItem"-->
-<!--    style="@style/Widget.MaterialComponents.Chip.Entry"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="fadshfhdsa "-->
-<!--    android:checkable="false"-->
-<!--    app:chipIconEnabled="false"-->
-<!--    app:closeIconEnabled="true"-->
-<!--    app:closeIcon="@drawable/close">-->
-<!--</com.google.android.material.chip.Chip>-->
-
 <com.google.android.material.chip.Chip android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:chipText="Default"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    style="@style/Widget.MaterialComponents.Chip.Entry"
+    app:closeIcon="@drawable/close"
+    android:checkable="false"
+    android:text="Test 1"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" />

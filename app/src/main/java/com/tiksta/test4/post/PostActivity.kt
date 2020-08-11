@@ -4,14 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.tiksta.test4.base.BaseActivity
 import com.tiksta.test4.R
+import com.tiksta.test4.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_post_tabs.*
 
+
 class PostActivity : BaseActivity() {
-    private lateinit var viewPager : ViewPager
-    private lateinit var adapter : ViewPagerAdapter
-    private lateinit var tabLayout : TabLayout
+    private lateinit var viewPager: ViewPager
+    private lateinit var adapter: ViewPagerAdapter
+    private lateinit var tabLayout: TabLayout
 
     override val layoutId: Int
         get() = R.layout.activity_post
@@ -43,19 +44,3 @@ class PostActivity : BaseActivity() {
         })
     }
 }
-
-/*
-ExpandableTransformationWidget
-ExpandableListView.OnGroupExpandListener
-ExpandableListAdapter
-ExpandableListView.OnGroupCollapseListener
-
-
-https://www.youtube.com/watch?v=QU5-IpnEub4
-
-https://developer.android.com/guide/navigation/navigation-swipe-view
-
-https://www.youtube.com/watch?v=h4HwU_ENXYM
-
-https://www.youtube.com/watch?v=hbMqd0XRN34
- */
