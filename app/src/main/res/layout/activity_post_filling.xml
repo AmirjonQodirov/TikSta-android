@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
 
+
     <Switch
         android:id="@+id/post_length"
         android:layout_width="370dp"
@@ -101,6 +102,7 @@
     </HorizontalScrollView>
 
     <TextView
+        android:background="@drawable/div"
         android:id="@+id/resultWithHashTags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
