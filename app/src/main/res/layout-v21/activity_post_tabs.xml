@@ -13,7 +13,7 @@
         android:minHeight="?attr/actionBarSize"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabSelectedTextColor="@color/colorPrimary"
         app:tabTextColor="@android:color/white" />
 
     <androidx.viewpager.widget.ViewPager

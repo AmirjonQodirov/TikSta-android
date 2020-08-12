@@ -5,7 +5,7 @@
 
     <gradient
         android:startColor="@color/colorPrimary"
-        android:endColor="@color/colorPrimaryDark"
+        android:endColor="@color/colorAccent"
         />
 
     <corners

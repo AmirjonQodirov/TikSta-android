@@ -17,7 +17,6 @@ class DataBaseHandler(private var context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(db: SQLiteDatabase?) {
-        println("Creating TABLE...")
         val createTable = "CREATE TABLE " + TABLE_NAME + " (" +
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COL_NAME + " VARCHAR(256)," +
@@ -141,7 +140,6 @@ class DataBaseHandler(private var context: Context) :
         val db = this.readableDatabase
         val query =
             "SELECT name FROM Tags WHERE name LIKE ('%' || \'" + tag + "\' || '%') ORDER BY " + platform + " ASC"
-        println(query)
         val result = db.rawQuery(query, null)
         var count = 0
         if (result.moveToFirst()) {

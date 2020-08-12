@@ -10,7 +10,6 @@ public class Utils {
 
     public static void setTabPosition(int tabPosition) {
         Utils.tabPosition = tabPosition;
-        System.out.println("Utils: " + tabPosition);
     }
 
     public static boolean isTiktokMaxLengthSet() {
