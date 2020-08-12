@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="60dp">
+        android:layout_marginBottom="?attr/actionBarSize"
+        >
 
         <include
             layout="@layout/activity_post_filling"

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.chip.Chip
@@ -28,17 +29,20 @@ import kotlin.collections.ArrayList
 @RequiresApi(Build.VERSION_CODES.N)
 class BlankFragment : Fragment() {
     private lateinit var viewModel: BlankViewModel
+    private var resultTagsList: ArrayList<String> = ArrayList()
+    private var isResultCalculated = false
+
+    private fun getActualPost(post: String): String {
+        return if (post_display.isChecked && (post.isNotEmpty() && !post[post.length - 1].isWhitespace())) {
+            "$post "
+        } else if (post_display.isChecked && (post.isEmpty() || post[post.length - 1].isWhitespace())) {
+            post
+        } else {
+            ""
+        }
+    }
 
     private fun updateResultWithHashTags(resultTagsList: ArrayList<String>, post: String) {
-        if (resultTagsList.isEmpty()) {
-            Toast.makeText(
-                view?.context,
-                "All hashtags have been removed!",
-                Toast.LENGTH_LONG
-            ).show()
-            return
-        }
-
         var result = post
         var isFirst = true
         for (tag in resultTagsList) {
@@ -53,6 +57,13 @@ class BlankFragment : Fragment() {
         copyToClipboard.visibility = View.VISIBLE
         resultWithHashTags.visibility = View.VISIBLE
         resultWithHashTags.text = result
+
+        if (resultTagsList.isEmpty() && !post_display.isChecked) {
+            copyToClipboard.visibility = View.GONE
+            resultWithHashTags.visibility = View.GONE
+        }
+
+        return
     }
 
     private fun generateResultTags(view: View) {
@@ -130,12 +141,10 @@ class BlankFragment : Fragment() {
         var hashTagsCount = 0
         var hashTagStarted = false
 
-        var post = editTextPost.text.toString()
-        if (post.isEmpty() || !post[post.length - 1].isWhitespace()) {
-            post += ' '
-        }
 
-        for (c in post) {
+        val currentPostState = editTextPost.text.toString()
+        val currentPostStateFor = "$currentPostState "
+        for (c in currentPostStateFor) {
             if (!hashTagStarted && c == '#') {
                 hashTagStarted = true
                 continue
@@ -196,7 +205,6 @@ class BlankFragment : Fragment() {
         }
 
         val postFit = PostFit(postLength, data)
-        var resultTagsList: ArrayList<String> = ArrayList()
 
         // Using 'switch' because code will look be more elegant if we add new platforms
         when (platform) {
@@ -219,15 +227,24 @@ class BlankFragment : Fragment() {
             chip.text = tag
             chip.setOnCloseIconClickListener {
                 chipGroup.removeView(chip)
+
+                if (resultTagsList.size == 1) {
+                    Toast.makeText(
+                        view.context,
+                        "All hashtags have been removed!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
                 resultTagsList.remove(tag)
 
-                updateResultWithHashTags(resultTagsList, post)
+                updateResultWithHashTags(resultTagsList, getActualPost(currentPostState))
             }
 
             chipGroup.addView(chip)
         }
 
-        updateResultWithHashTags(resultTagsList, post)
+        updateResultWithHashTags(resultTagsList, getActualPost(currentPostState))
     }
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
@@ -249,9 +266,9 @@ class BlankFragment : Fragment() {
             }
         }
 
-        val postLength = view.findViewById<Switch>(R.id.post_length)
+        val postLength = view.findViewById<SwitchCompat>(R.id.post_length)
         val postText: EditText = view.findViewById(R.id.editTextPost)
-        val postDisplay: Switch = view.findViewById(R.id.post_display)
+        val postDisplay: SwitchCompat = view.findViewById(R.id.post_display)
 
         postLength.setOnCheckedChangeListener { _, considerPostLength ->
             if (considerPostLength) {
@@ -267,6 +284,7 @@ class BlankFragment : Fragment() {
 
         submitButton.setOnClickListener {
             generateResultTags(view)
+            isResultCalculated = true
         }
 
         val copyToClipboardManager: Button = view.findViewById(R.id.copyToClipboard)
@@ -280,6 +298,15 @@ class BlankFragment : Fragment() {
             clipboard.setPrimaryClip(clip)
 
             Toast.makeText(activity, "Result copied to clipboard!", Toast.LENGTH_LONG).show()
+        }
+
+        postDisplay.setOnCheckedChangeListener { _, _ ->
+            if (isResultCalculated) {
+                updateResultWithHashTags(
+                    resultTagsList,
+                    getActualPost(editTextPost.text.toString())
+                )
+            }
         }
 
         return view
