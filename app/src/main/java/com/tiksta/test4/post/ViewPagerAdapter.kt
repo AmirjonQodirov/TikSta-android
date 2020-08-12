@@ -1,5 +1,7 @@
 package com.tiksta.test4.post
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -11,6 +13,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     private val titles = arrayOf("TikTok", "Instagram")
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun getItem(position: Int): Fragment {
         return BlankFragment()
     }

@@ -18,6 +18,7 @@ class PostActivity : BaseActivity() {
     private lateinit var viewPager: ViewPager
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var tabLayout: TabLayout
+//    private lateinit var bViewModel: BlankViewModel
 
     override val layoutId: Int
         get() = R.layout.activity_post
@@ -29,8 +30,14 @@ class PostActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Utils.setTiktokMaxLengthSet(false)
+
         viewPager = findViewById(R.id.pager)
+
+
         adapter = ViewPagerAdapter(supportFragmentManager)
+
+
         viewPager.adapter = adapter
 
         tabLayout = findViewById(R.id.tabs)

@@ -10,7 +10,10 @@ import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
@@ -34,7 +37,7 @@ class BlankFragment : Fragment() {
 
     private fun getActualPost(post: String): String {
         return if (post_display.isChecked && (post.isNotEmpty() && !post[post.length - 1].isWhitespace())) {
-            "$post "
+            "$post\n"
         } else if (post_display.isChecked && (post.isEmpty() || post[post.length - 1].isWhitespace())) {
             post
         } else {
@@ -177,11 +180,7 @@ class BlankFragment : Fragment() {
 
         println("AAAAAAAAAAAAAAAAAAAAA " + hashTagsCount + ", " + platform)
         if (platform == "instagram_id" && hashTagsCount > 30) {
-            Toast.makeText(
-                view.context,
-                "Too much hashtags in your post! (" + hashTagsCount + " > 30)",
-                Toast.LENGTH_LONG
-            ).show()
+            editTextPost.error = "Too much hashtags in your post! ($hashTagsCount > 30)"
             return
         } else if (platform == "instagram_id" && hashTagsCount == 30) {
             Toast.makeText(view.context, "You already have 30/30 hashtags!", Toast.LENGTH_LONG)
@@ -314,12 +313,79 @@ class BlankFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        val inflater: LayoutInflater = LayoutInflater.from(view?.context)
         viewModel = ViewModelProviders.of(this).get(BlankViewModel::class.java)
+        if (savedInstanceState != null) {
+            val textViewText = savedInstanceState?.getString("RESULT")
+            if (textViewText != null) {
+                if(textViewText.isNotEmpty()){
+                    val nameView = view?.findViewById(R.id.resultWithHashTags) as TextView
+                    nameView.text = textViewText
+                    nameView.visibility=View.VISIBLE
+
+                    var chips = savedInstanceState?.getStringArrayList("CHIPS")
+
+                    if (chips != null) {
+                        println("get = = = $textViewText ${chips.size}")
+
+                        var addToResult = resultTagsList.isEmpty()
+
+                        for (tag in chips) {
+                            if (addToResult) {
+                                resultTagsList.add(tag)
+                            }
+
+                            val chip: Chip = inflater.inflate(R.layout.chip_item, null, false) as Chip
+                            chip.text = tag
+                            chip.setOnCloseIconClickListener {
+                                chipGroup.removeView(chip)
+
+                                if (chips.size == 1) {
+                                    Toast.makeText(
+                                        view?.context,
+                                        "All hashtags have been removed!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+
+                                chips.remove(tag)
+                                resultTagsList.remove(tag)
+
+                            updateResultWithHashTags(chips, getActualPost(editTextPost.text.toString()))
+                            }
+
+
+                            chipGroup.addView(chip)
+                        }
+                    }
+                    chipGroup.visibility=View.VISIBLE
+
+                    //Restore the fragment's state here
+                }
+            }
+        }
+
         // TODO: Use the ViewModel
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        val nameView = view?.findViewById<TextView>(R.id.resultWithHashTags)?.text.toString()
+        if(nameView.isNotEmpty()){
+            outState.putString("RESULT", nameView)
+            println("saved = = =  $nameView")
+
+//            if(resultTagsList.isNotEmpty()){
+                outState.putStringArrayList("CHIPS",resultTagsList)
+//            }
+        }
+        super.onSaveInstanceState(outState)
+    }
+
 }
 
 /*
 #a#b#c#d#e#f#g#h#j#h#f#d#d#d#d#d#c#c#c#c#c#c#c#C#d#d#s#G#g3#s#g#a#r#s#a#a#d#a#a#a#a#a#a#a#a#a#a#a
 a#a#b#c#d#e#f#g#h#j#h#f#d#d#d#d#d#c#c#c#c#c#c#c#C#d#d#s#G#g3#s#g#a#r#s#a#a#d#a#a#a#a#a#a#a#a#a#a#a
+#sky #vsco #music #style #smile #igers #girls #artist #repost #summer #selfie #sunset #design
  */
