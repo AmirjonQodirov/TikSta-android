@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.tiksta.test4.R
-import com.tiksta.test4.post.data.DataBaseHandler
+import com.tiksta.test4.post.data.DatabaseAccess
 import kotlinx.android.synthetic.main.activity_post_filling.*
 import java.lang.Character.isWhitespace
 import java.lang.Character.toLowerCase
@@ -101,7 +101,9 @@ class BlankFragment : Fragment() {
         }
 
 
-        val db = context?.let { it1 -> DataBaseHandler(it1) }
+//        val db = context?.let { it1 -> DataBaseHandler(it1) }
+        val db = DatabaseAccess.getInstance(view.context)
+        db.open()
 
         if (db == null) {
             Toast.makeText(view.context, "Can't connect to database :(", Toast.LENGTH_LONG).show()
@@ -143,7 +145,8 @@ class BlankFragment : Fragment() {
                 }
             }
         }
-        println()
+
+        db.close()
 
         var currentHashTag = ""
         var hashTagsCount = 0
@@ -297,12 +300,6 @@ class BlankFragment : Fragment() {
 
 
         submitButton.setOnClickListener {
-//            if (!Utils.isDatabaseCreated()) {
-//                print("cd111111111111111")
-//                Toast.makeText(view.context, "Database is loading", Toast.LENGTH_LONG).show()
-//                edittt.visibility = View.VISIBLE
-//            }
-            edittt.visibility = View.GONE
             resultTagsList.clear()
             updateResultWithHashTags(
                 resultTagsList,
@@ -390,7 +387,8 @@ class BlankFragment : Fragment() {
                     }
                     chipGroup.visibility = View.VISIBLE
                     div2.visibility = View.VISIBLE
-                    edittt.visibility = View.GONE
+
+                    println("\n\n\n=== == == == === == Loading saved instances.............\n\n\n\n")
                     //Restore the fragment's state here
                 }
             }
