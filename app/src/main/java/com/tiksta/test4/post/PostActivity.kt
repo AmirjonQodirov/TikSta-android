@@ -18,7 +18,7 @@ class PostActivity : BaseActivity() {
     private lateinit var viewPager: ViewPager
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var tabLayout: TabLayout
-//    private lateinit var bViewModel: BlankViewModel
+    private lateinit var bViewModel: BlankViewModel
 
     override val layoutId: Int
         get() = R.layout.activity_post

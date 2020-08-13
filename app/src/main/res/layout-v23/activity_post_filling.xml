@@ -6,6 +6,16 @@
     android:layout_height="match_parent">
 
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/div"
         android:layout_width="match_parent"
@@ -19,11 +29,11 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/post_length"
-            android:layout_width="370dp"
-            android:layout_height="68dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginBottom="0dp"
+            android:textSize="16sp"
             android:text="Consider the length of your post in our calculations?"
             android:thumbTint="@color/colorPrimary"
             android:trackTint="@color/colorPrimary"
@@ -34,8 +44,11 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/post_display"
-            android:layout_width="231dp"
-            android:layout_height="73dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_margin="4dp"
+            android:layout_marginBottom="0dp"
             android:text="Display post along hashtags?"
             android:thumbTint="@color/colorPrimary"
             android:trackTint="@color/colorPrimary"
@@ -101,6 +114,8 @@
             android:id="@+id/chipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/submit_button"
@@ -113,9 +128,8 @@
 
     <Button
         android:id="@+id/copyToClipboard"
-        android:layout_width="75dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="copy"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -129,22 +143,31 @@
         android:id="@+id/div2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:visibility="gone"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:padding="5dp"
         android:background="@drawable/div"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-        tools:layout_editor_absoluteX="31dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
 
         <TextView
             android:id="@+id/resultWithHashTags"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="2dp"
             android:ems="10"
             android:gravity="start|top"
+            android:textColor="@android:color/black"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.466"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.488" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

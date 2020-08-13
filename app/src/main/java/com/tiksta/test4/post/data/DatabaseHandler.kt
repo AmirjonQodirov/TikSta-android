@@ -7,11 +7,11 @@ import android.content.res.XmlResourceParser
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.os.Build
+import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import com.tiksta.test4.R
+import com.tiksta.test4.post.Utils
 import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserException
-import java.lang.Exception
 
 
 const val DATABASE_NAME = "TikStaDB"
@@ -46,7 +46,8 @@ class DataBaseHandler(private var context: Context) :
 
         // Открываем xml-файл
 
-        // Открываем xml-файл
+        val progressBar = Utils.getPostActivityView().findViewById(R.id.progressBar) as ProgressBar
+        progressBar.visibility = ProgressBar.VISIBLE
         val parser: XmlResourceParser = res.getXml(R.xml.all_tags)
         try {
             // Ищем конец документа
@@ -74,6 +75,7 @@ class DataBaseHandler(private var context: Context) :
             parser.close()
         }
 
+        progressBar.visibility = ProgressBar.INVISIBLE
 //        val inserts: String = "INSERT INTO Tags (name, instagram_id, tiktok_id) VALUES" +
 //                "('love',1, 287)," +
 //                "('instagood',2, 288)," +

@@ -36,9 +36,9 @@ class BlankFragment : Fragment() {
     private var isResultCalculated = false
 
     private fun getActualPost(post: String): String {
-        return if (post_display.isChecked && (post.isNotEmpty() && !post[post.length - 1].isWhitespace())) {
+        return if (post_length.isChecked && post_display.isChecked && (post.isNotEmpty() && !post[post.length - 1].isWhitespace())) {
             "$post\n"
-        } else if (post_display.isChecked && (post.isEmpty() || post[post.length - 1].isWhitespace())) {
+        } else if (post_length.isChecked && post_display.isChecked && (post.isEmpty() || post[post.length - 1].isWhitespace())) {
             post
         } else {
             ""
@@ -57,6 +57,8 @@ class BlankFragment : Fragment() {
             }
         }
 
+        chipGroup.visibility = View.VISIBLE
+        div2.visibility = View.VISIBLE
         copyToClipboard.visibility = View.VISIBLE
         resultWithHashTags.visibility = View.VISIBLE
         resultWithHashTags.text = result
@@ -64,6 +66,7 @@ class BlankFragment : Fragment() {
         if (resultTagsList.isEmpty() && !post_display.isChecked) {
             copyToClipboard.visibility = View.GONE
             resultWithHashTags.visibility = View.GONE
+            div2.visibility = View.GONE
         }
 
         return
@@ -92,10 +95,10 @@ class BlankFragment : Fragment() {
         if (postLength < 0) {
             editTextPost.error = "Incorrect length!"
             return
-        } else if (platform == "instagram_id" && postLength >= 2199) {
+        } else if (platform == "instagram_id" && post_length.isChecked && postLength >= 2199) {
             editTextPost.error = "Your post is too long!"
             return
-        } else if (platform == "tiktok_id" && postLength >= 99) {
+        } else if (platform == "tiktok_id" && post_length.isChecked && postLength >= 99) {
             editTextPost.error = "Your post is too long!"
             return
         }
@@ -203,7 +206,11 @@ class BlankFragment : Fragment() {
             return
         }
 
-        val postFit = PostFit(postLength, data)
+        val postFit = if (post_length.isChecked) {
+            PostFit(postLength, data)
+        } else {
+            PostFit(0, data)
+        }
 
         // Using 'switch' because code will look be more elegant if we add new platforms
         when (platform) {
@@ -251,7 +258,9 @@ class BlankFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.blank_fragment, container, false)
+        Utils.setPostActivityView(view)
 
         if (!Utils.isTiktokMaxLengthSet() && Utils.getTabPosition() == 0) {
             Utils.setTiktokMaxLengthSet(true)
@@ -268,6 +277,7 @@ class BlankFragment : Fragment() {
         val postLength = view.findViewById<SwitchCompat>(R.id.post_length)
         val postText: EditText = view.findViewById(R.id.editTextPost)
         val postDisplay: SwitchCompat = view.findViewById(R.id.post_display)
+        val submitButton: Button = view.findViewById(R.id.submit_button)
 
         postLength.setOnCheckedChangeListener { _, considerPostLength ->
             if (considerPostLength) {
@@ -277,11 +287,19 @@ class BlankFragment : Fragment() {
                 postText.visibility = View.GONE
                 postDisplay.visibility = View.GONE
             }
+
+            if (isResultCalculated) {
+                submitButton.performClick()
+            }
         }
 
-        val submitButton: Button = view.findViewById(R.id.submit_button)
 
         submitButton.setOnClickListener {
+            resultTagsList.clear()
+            updateResultWithHashTags(
+                resultTagsList,
+                getActualPost(editTextPost.text.toString())
+            )
             generateResultTags(view)
             isResultCalculated = true
         }
@@ -314,15 +332,17 @@ class BlankFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        print("xxxx")
         val inflater: LayoutInflater = LayoutInflater.from(view?.context)
         viewModel = ViewModelProviders.of(this).get(BlankViewModel::class.java)
         if (savedInstanceState != null) {
             val textViewText = savedInstanceState?.getString("RESULT")
             if (textViewText != null) {
-                if(textViewText.isNotEmpty()){
+                if (textViewText.isNotEmpty()) {
                     val nameView = view?.findViewById(R.id.resultWithHashTags) as TextView
                     nameView.text = textViewText
-                    nameView.visibility=View.VISIBLE
+                    nameView.visibility = View.VISIBLE
+                    copyToClipboard.visibility = View.VISIBLE
 
                     var chips = savedInstanceState?.getStringArrayList("CHIPS")
 
@@ -336,7 +356,8 @@ class BlankFragment : Fragment() {
                                 resultTagsList.add(tag)
                             }
 
-                            val chip: Chip = inflater.inflate(R.layout.chip_item, null, false) as Chip
+                            val chip: Chip =
+                                inflater.inflate(R.layout.chip_item, null, false) as Chip
                             chip.text = tag
                             chip.setOnCloseIconClickListener {
                                 chipGroup.removeView(chip)
@@ -352,14 +373,18 @@ class BlankFragment : Fragment() {
                                 chips.remove(tag)
                                 resultTagsList.remove(tag)
 
-                            updateResultWithHashTags(chips, getActualPost(editTextPost.text.toString()))
+                                updateResultWithHashTags(
+                                    chips,
+                                    getActualPost(editTextPost.text.toString())
+                                )
                             }
 
 
                             chipGroup.addView(chip)
                         }
                     }
-                    chipGroup.visibility=View.VISIBLE
+                    chipGroup.visibility = View.VISIBLE
+                    div2.visibility = View.VISIBLE
 
                     //Restore the fragment's state here
                 }
@@ -371,12 +396,12 @@ class BlankFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         val nameView = view?.findViewById<TextView>(R.id.resultWithHashTags)?.text.toString()
-        if(nameView.isNotEmpty()){
+        if (nameView.isNotEmpty()) {
             outState.putString("RESULT", nameView)
             println("saved = = =  $nameView")
 
 //            if(resultTagsList.isNotEmpty()){
-                outState.putStringArrayList("CHIPS",resultTagsList)
+            outState.putStringArrayList("CHIPS", resultTagsList)
 //            }
         }
         super.onSaveInstanceState(outState)
