@@ -6,15 +6,25 @@
     android:layout_height="match_parent">
 
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/edittt"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/div"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Hi! It's your first launch of the app, that's why it may take a few minutes to fetch all data after you click 'SUBMIT' button.\nThank you for your patience!"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/submit_button"
+        app:layout_constraintVertical_bias="0.062" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/div"

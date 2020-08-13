@@ -7,7 +7,10 @@ import android.content.res.XmlResourceParser
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.os.Build
+import android.view.View
+import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.tiksta.test4.R
 import com.tiksta.test4.post.Utils
@@ -35,6 +38,7 @@ class DataBaseHandler(private var context: Context) :
                 COL_TIKTOK_ID + " INTEGER)"
 
         // TODO Auto-generated method stub
+        Thread.sleep(2000)
         db?.execSQL(createTable)
         // Добавляем записи в таблицу
         val values = ContentValues()
@@ -46,8 +50,12 @@ class DataBaseHandler(private var context: Context) :
 
         // Открываем xml-файл
 
-        val progressBar = Utils.getPostActivityView().findViewById(R.id.progressBar) as ProgressBar
-        progressBar.visibility = ProgressBar.VISIBLE
+//        val progressBar = Utils.getPostActivityView().findViewById(R.id.progressBar) as ProgressBar
+//        progressBar.visibility = View.VISIBLE
+//        val edittttt = Utils.getPostActivityView().findViewById(R.id.editTextTag) as TextView
+////        edittttt.visibility = View.VISIBLE
+//        println("ggggggggggggggggggggggggggg + " + edittttt.text.toString())
+        println("OMDAM, AMIR...............................")
         val parser: XmlResourceParser = res.getXml(R.xml.all_tags)
         try {
             // Ищем конец документа
@@ -65,17 +73,22 @@ class DataBaseHandler(private var context: Context) :
                     val inserts: String =
                         "INSERT INTO Tags (name, instagram_id, tiktok_id) VALUES('$name' , $ins , $tt)"
                     db?.execSQL(inserts)
+
+//                    println("Loading.. $cnt")
+//                    edittttt.text = "Loading... $cnt"
                 }
                 eventType = parser.next()
             }
         } // Catch errors
         catch (e: Exception) {
         } finally {
+//            edittttt.visibility = View.GONE
             // Close the xml file
             parser.close()
         }
 
-        progressBar.visibility = ProgressBar.INVISIBLE
+//        println("DONEEEEEEEEEEEEEEEEEEE")
+//        progressBar.visibility = ProgressBar.INVISIBLE
 //        val inserts: String = "INSERT INTO Tags (name, instagram_id, tiktok_id) VALUES" +
 //                "('love',1, 287)," +
 //                "('instagood',2, 288)," +

@@ -10,10 +10,7 @@ import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
@@ -102,6 +99,7 @@ class BlankFragment : Fragment() {
             editTextPost.error = "Your post is too long!"
             return
         }
+
 
         val db = context?.let { it1 -> DataBaseHandler(it1) }
 
@@ -260,7 +258,7 @@ class BlankFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.blank_fragment, container, false)
-        Utils.setPostActivityView(view)
+//        Utils.setPostActivityView(view)
 
         if (!Utils.isTiktokMaxLengthSet() && Utils.getTabPosition() == 0) {
             Utils.setTiktokMaxLengthSet(true)
@@ -295,6 +293,12 @@ class BlankFragment : Fragment() {
 
 
         submitButton.setOnClickListener {
+//            if (!Utils.isDatabaseCreated()) {
+//                print("cd111111111111111")
+//                Toast.makeText(view.context, "Database is loading", Toast.LENGTH_LONG).show()
+//                edittt.visibility = View.VISIBLE
+//            }
+            edittt.visibility = View.GONE
             resultTagsList.clear()
             updateResultWithHashTags(
                 resultTagsList,
@@ -330,9 +334,9 @@ class BlankFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
         super.onActivityCreated(savedInstanceState)
 
-        print("xxxx")
         val inflater: LayoutInflater = LayoutInflater.from(view?.context)
         viewModel = ViewModelProviders.of(this).get(BlankViewModel::class.java)
         if (savedInstanceState != null) {
@@ -347,10 +351,7 @@ class BlankFragment : Fragment() {
                     var chips = savedInstanceState?.getStringArrayList("CHIPS")
 
                     if (chips != null) {
-                        println("get = = = $textViewText ${chips.size}")
-
                         var addToResult = resultTagsList.isEmpty()
-
                         for (tag in chips) {
                             if (addToResult) {
                                 resultTagsList.add(tag)
@@ -385,7 +386,7 @@ class BlankFragment : Fragment() {
                     }
                     chipGroup.visibility = View.VISIBLE
                     div2.visibility = View.VISIBLE
-
+                    edittt.visibility = View.GONE
                     //Restore the fragment's state here
                 }
             }
