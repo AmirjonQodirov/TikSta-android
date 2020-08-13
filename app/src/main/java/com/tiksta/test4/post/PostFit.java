@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-/**
- Author: Muhammadjon Hakimov
- **/
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class PostFit {
     private Integer len;
@@ -23,7 +20,7 @@ public class PostFit {
 
 
     private int calculatePrefixSums(ArrayList<String> tags, ArrayList<Integer> prefixSums, int len) {
-        tags.sort(Comparator.comparing(String::length));
+//        tags.sort(Comparator.comparing(String::length));
         if (tags.get(0).length() + 2 > len) {
             return 0;
         }

@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.chip.Chip
@@ -20,6 +22,7 @@ import com.google.android.material.chip.ChipGroup
 import com.tiksta.test4.R
 import com.tiksta.test4.post.data.DatabaseAccess
 import kotlinx.android.synthetic.main.activity_post_filling.*
+import kotlinx.android.synthetic.main.blank_fragment.*
 import java.lang.Character.isWhitespace
 import java.lang.Character.toLowerCase
 import java.util.*
@@ -133,7 +136,6 @@ class BlankFragment : Fragment() {
         //todo
 
 
-
         for (tag in allTags) {
             val tmpTags = db.readData(tag, platform)
 
@@ -238,6 +240,7 @@ class BlankFragment : Fragment() {
             chip.text = tag
             chip.setOnCloseIconClickListener {
                 chipGroup.removeView(chip)
+                Utils.setChipClosed(true)
 
                 if (resultTagsList.size == 1) {
                     Toast.makeText(
@@ -268,6 +271,9 @@ class BlankFragment : Fragment() {
 //        Utils.setPostActivityView(view)
 
         if (!Utils.isTiktokMaxLengthSet() && Utils.getTabPosition() == 0) {
+            val frameLayoutOur = view.findViewById<FrameLayout>(R.id.frameLayoutOur)
+            frameLayoutOur.setBackgroundResource(R.drawable.background_tiktok)
+            println("changing bg image... 222222222222222222222222222222")
             Utils.setTiktokMaxLengthSet(true)
             val maxLength = 100
 
@@ -300,13 +306,18 @@ class BlankFragment : Fragment() {
 
 
         submitButton.setOnClickListener {
-            resultTagsList.clear()
-            updateResultWithHashTags(
-                resultTagsList,
-                getActualPost(editTextPost.text.toString())
-            )
-            generateResultTags(view)
-            isResultCalculated = true
+            if (Utils.getPost() != editTextPost.text.toString() || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
+                resultTagsList.clear()
+                updateResultWithHashTags(
+                    resultTagsList,
+                    getActualPost(editTextPost.text.toString())
+                )
+                generateResultTags(view)
+                isResultCalculated = true
+                Utils.setPost(editTextPost.text.toString())
+                Utils.setTag(editTextTag.text.toString())
+                Utils.setChipClosed(false)
+            }
         }
 
         val copyToClipboardManager: Button = view.findViewById(R.id.copyToClipboard)
@@ -363,7 +374,7 @@ class BlankFragment : Fragment() {
                             chip.text = tag
                             chip.setOnCloseIconClickListener {
                                 chipGroup.removeView(chip)
-
+                                Utils.setChipClosed(true)
                                 if (chips.size == 1) {
                                     Toast.makeText(
                                         view?.context,
