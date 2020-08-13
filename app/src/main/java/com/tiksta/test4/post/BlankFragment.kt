@@ -128,6 +128,10 @@ class BlankFragment : Fragment() {
 
         print("Has: ")
 
+        //todo
+
+
+
         for (tag in allTags) {
             val tmpTags = db.readData(tag, platform)
 
