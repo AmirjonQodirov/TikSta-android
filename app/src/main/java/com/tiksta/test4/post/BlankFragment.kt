@@ -1,6 +1,7 @@
 package com.tiksta.test4.post
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -10,11 +11,13 @@ import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.chip.Chip
@@ -22,7 +25,6 @@ import com.google.android.material.chip.ChipGroup
 import com.tiksta.test4.R
 import com.tiksta.test4.post.data.DatabaseAccess
 import kotlinx.android.synthetic.main.activity_post_filling.*
-import kotlinx.android.synthetic.main.blank_fragment.*
 import java.lang.Character.isWhitespace
 import java.lang.Character.toLowerCase
 import java.util.*
@@ -34,6 +36,18 @@ class BlankFragment : Fragment() {
     private lateinit var viewModel: BlankViewModel
     private var resultTagsList: ArrayList<String> = ArrayList()
     private var isResultCalculated = false
+
+    private fun hideKeyboard(activity: Activity) {
+        val imm: InputMethodManager =
+            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = activity.currentFocus
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 
     private fun getActualPost(post: String): String {
         return if (post_length.isChecked && post_display.isChecked && (post.isNotEmpty() && !post[post.length - 1].isWhitespace())) {
@@ -339,6 +353,8 @@ class BlankFragment : Fragment() {
                 Utils.setTag(editTextTag.text.toString())
                 Utils.setChipClosed(false)
             }
+
+            activity?.let { it1 -> hideKeyboard(it1) }
         }
 
         val copyToClipboardManager: Button = view.findViewById(R.id.copyToClipboard)
