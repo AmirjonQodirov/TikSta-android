@@ -46,6 +46,10 @@ class BlankFragment : Fragment() {
     }
 
     private fun updateResultWithHashTags(resultTagsList: ArrayList<String>, post: String) {
+        if (!isResultCalculated || (resultTagsList.isEmpty() && (!post_length.isChecked || editTextPost.text.isEmpty()))) {
+            return
+        }
+
         var result = post
         var isFirst = true
         for (tag in resultTagsList) {
@@ -68,8 +72,6 @@ class BlankFragment : Fragment() {
             resultWithHashTags.visibility = View.GONE
             div2.visibility = View.GONE
         }
-
-        return
     }
 
     private fun generateResultTags(view: View) {
@@ -95,6 +97,9 @@ class BlankFragment : Fragment() {
         if (postLength < 0) {
             editTextPost.error = "Incorrect length!"
             return
+        } else if (post_length.isChecked && postLength == 0) {
+            editTextPost.error = "This field is required!"
+            return
         } else if (platform == "instagram_id" && post_length.isChecked && postLength >= 2199) {
             editTextPost.error = "Your post is too long!"
             return
@@ -107,11 +112,6 @@ class BlankFragment : Fragment() {
 //        val db = context?.let { it1 -> DataBaseHandler(it1) }
         val db = DatabaseAccess.getInstance(view.context)
         db.open()
-
-        if (db == null) {
-            Toast.makeText(view.context, "Can't connect to database :(", Toast.LENGTH_LONG).show()
-            return
-        }
 
         val tags = editTextTag.text.toString() + " "
         var currentTag = StringBuilder()
@@ -193,7 +193,7 @@ class BlankFragment : Fragment() {
             editTextPost.error = "Too much hashtags in your post! ($hashTagsCount > 30)"
             return
         } else if (platform == "instagram_id" && hashTagsCount == 30) {
-            Toast.makeText(view.context, "You already have 30/30 hashtags!", Toast.LENGTH_LONG)
+            Toast.makeText(view.context, "You already have 30/30 hashtags!", Toast.LENGTH_SHORT)
                 .show()
             return
         }
@@ -209,7 +209,7 @@ class BlankFragment : Fragment() {
         println()
 
         if (data.isEmpty()) {
-            Toast.makeText(view.context, "No hashtags found!", Toast.LENGTH_LONG).show()
+            Toast.makeText(view.context, "No hashtags found!", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -230,7 +230,7 @@ class BlankFragment : Fragment() {
             Toast.makeText(
                 view.context,
                 "Not enough space to insert even a hashtag!",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
             return
         }
@@ -246,7 +246,7 @@ class BlankFragment : Fragment() {
                     Toast.makeText(
                         view.context,
                         "All hashtags have been removed!",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
 
@@ -271,8 +271,6 @@ class BlankFragment : Fragment() {
 //        Utils.setPostActivityView(view)
 
         if (!Utils.isTiktokMaxLengthSet() && Utils.getTabPosition() == 0) {
-            val frameLayoutOur = view.findViewById<FrameLayout>(R.id.frameLayoutOur)
-            frameLayoutOur.setBackgroundResource(R.drawable.background_tiktok)
             println("changing bg image... 222222222222222222222222222222")
             Utils.setTiktokMaxLengthSet(true)
             val maxLength = 100
@@ -330,15 +328,12 @@ class BlankFragment : Fragment() {
             )
             clipboard.setPrimaryClip(clip)
 
-            Toast.makeText(activity, "Result copied to clipboard!", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Result copied to clipboard!", Toast.LENGTH_SHORT).show()
         }
 
         postDisplay.setOnCheckedChangeListener { _, _ ->
             if (isResultCalculated) {
-                updateResultWithHashTags(
-                    resultTagsList,
-                    getActualPost(editTextPost.text.toString())
-                )
+                submitButton.performClick()
             }
         }
 
@@ -379,7 +374,7 @@ class BlankFragment : Fragment() {
                                     Toast.makeText(
                                         view?.context,
                                         "All hashtags have been removed!",
-                                        Toast.LENGTH_LONG
+                                        Toast.LENGTH_SHORT
                                     ).show()
                                 }
 
