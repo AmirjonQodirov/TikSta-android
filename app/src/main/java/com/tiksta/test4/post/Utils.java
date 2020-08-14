@@ -4,7 +4,7 @@ public class Utils {
     private static int tabPosition = 0;
     private static boolean tiktokMaxLengthSet = false;
     private static String tag = null;
-    private static String post = "";
+    private static String post = null;
     private static boolean chipClosed = false;
 
 
@@ -14,7 +14,7 @@ public class Utils {
 
     public static void setTabPosition(int tabPosition) {
         tag = null;
-        post = "";
+        post = null;
         chipClosed = false;
         Utils.tabPosition = tabPosition;
     }

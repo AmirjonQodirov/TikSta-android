@@ -46,7 +46,11 @@ class BlankFragment : Fragment() {
     }
 
     private fun updateResultWithHashTags(resultTagsList: ArrayList<String>, post: String) {
-        if (!isResultCalculated || (resultTagsList.isEmpty() && (!post_length.isChecked || editTextPost.text.isEmpty()))) {
+        if ((resultTagsList.isEmpty() && (!post_length.isChecked || (post_length.isChecked && (editTextPost.text.isEmpty() || !post_display.isChecked))))) {
+            copyToClipboard.visibility = View.GONE
+            resultWithHashTags.visibility = View.GONE
+            div2.visibility = View.GONE
+
             return
         }
 
@@ -67,11 +71,11 @@ class BlankFragment : Fragment() {
         resultWithHashTags.visibility = View.VISIBLE
         resultWithHashTags.text = result
 
-        if (resultTagsList.isEmpty() && !post_display.isChecked) {
-            copyToClipboard.visibility = View.GONE
-            resultWithHashTags.visibility = View.GONE
-            div2.visibility = View.GONE
-        }
+//        if (resultTagsList.isEmpty() && !post_display.isChecked) {
+//            copyToClipboard.visibility = View.GONE
+//            resultWithHashTags.visibility = View.GONE
+//            div2.visibility = View.GONE
+//        }
     }
 
     private fun generateResultTags(view: View) {
@@ -298,13 +302,6 @@ class BlankFragment : Fragment() {
             }
 
             if (isResultCalculated) {
-                submitButton.performClick()
-            }
-        }
-
-
-        submitButton.setOnClickListener {
-            if (Utils.getPost() != editTextPost.text.toString() || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
                 resultTagsList.clear()
                 updateResultWithHashTags(
                     resultTagsList,
@@ -312,7 +309,33 @@ class BlankFragment : Fragment() {
                 )
                 generateResultTags(view)
                 isResultCalculated = true
-                Utils.setPost(editTextPost.text.toString())
+
+                if (editTextPost.text.isEmpty()) {
+                    Utils.setPost(null)
+                } else {
+                    Utils.setPost(editTextPost.text.toString())
+                }
+                Utils.setTag(editTextTag.text.toString())
+                Utils.setChipClosed(false)
+            }
+        }
+
+
+        submitButton.setOnClickListener {
+            if ((post_length.isChecked && Utils.getPost() == null) || Utils.getTag() == null || ((Utils.getPost() != null || editTextPost.text.isNotEmpty()) && Utils.getPost() != editTextPost.text.toString()) || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
+                resultTagsList.clear()
+                updateResultWithHashTags(
+                    resultTagsList,
+                    getActualPost(editTextPost.text.toString())
+                )
+                generateResultTags(view)
+                isResultCalculated = true
+
+                if (editTextPost.text.isEmpty()) {
+                    Utils.setPost(null)
+                } else {
+                    Utils.setPost(editTextPost.text.toString())
+                }
                 Utils.setTag(editTextTag.text.toString())
                 Utils.setChipClosed(false)
             }
@@ -333,6 +356,10 @@ class BlankFragment : Fragment() {
 
         postDisplay.setOnCheckedChangeListener { _, _ ->
             if (isResultCalculated) {
+                updateResultWithHashTags(
+                    resultTagsList,
+                    getActualPost(editTextPost.text.toString())
+                )
                 submitButton.performClick()
             }
         }
