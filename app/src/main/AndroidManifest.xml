@@ -7,9 +7,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:windowSoftInputMode="stateHidden"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateHidden">
+        <activity android:name=".blog.BlogPage"
+            android:parentActivityName=".blog.BlogActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
         <activity android:name=".home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,11 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".post.PostActivity" />
-
         <activity android:name=".blog.BlogActivity" />
-
         <activity android:name=".info.InfoActivity" />
     </application>
 

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.tiksta.test4"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -43,6 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.0-alpha06'
+    implementation 'com.r0adkll:slidableactivity:2.1.0'
 
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 }

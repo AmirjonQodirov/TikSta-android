@@ -9,4 +9,5 @@ class InfoActivity : BaseActivity() {
 
     override val bottomNavigationMenuItemId: Int
         get() = R.id.action_info
+//        get() = R.id.action_post
 }

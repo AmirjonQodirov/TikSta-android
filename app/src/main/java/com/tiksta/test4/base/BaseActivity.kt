@@ -51,7 +51,7 @@ abstract class BaseActivity : AppCompatActivity(),
                 }
             }
             finish()
-        }, 300)
+        }, 0)
         return true
     }
 

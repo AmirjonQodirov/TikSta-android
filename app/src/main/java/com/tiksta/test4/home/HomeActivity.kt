@@ -9,4 +9,5 @@ class HomeActivity : BaseActivity() {
 
     override val bottomNavigationMenuItemId: Int
         get() = R.id.action_home
+//        get() = R.id.action_post
 }
