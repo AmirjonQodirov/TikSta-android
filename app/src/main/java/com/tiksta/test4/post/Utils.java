@@ -18,6 +18,7 @@ public class Utils {
     private static String resultWithHashtagsText = "";
     private static int hashTagsFound = 0;
     private static String errorMessage = null;
+    private static boolean considerPostLength = false;
 
     public static int getTabPosition() {
         return tabPosition;
@@ -128,5 +129,13 @@ public class Utils {
 
     public static void setErrorMessage(String errorMessage) {
         Utils.errorMessage = errorMessage;
+    }
+
+    public static boolean isConsiderPostLength() {
+        return considerPostLength;
+    }
+
+    public static void setConsiderPostLength(boolean considerPostLength) {
+        Utils.considerPostLength = considerPostLength;
     }
 }

@@ -241,6 +241,10 @@ class BlankFragment : Fragment() {
         val db = DatabaseAccess.getInstance(view.context)
         db.open()
         Utils.setHashTagsFound(0)
+
+        if (allTags.size > 30) {
+            allTags = ArrayList(allTags.subList(0, 31))
+        }
         for (tag in allTags) {
 
             val tmpTags = db.readData(tag, platform)
@@ -335,6 +339,11 @@ class BlankFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        Utils.setConsiderPostLength(false)
+        Utils.setTag(null)
+        Utils.setPost(null)
+        Utils.setChipClosed(false)
+
         val view = inflater.inflate(R.layout.blank_fragment, container, false)
 //        Utils.setPostActivityView(view)
 
@@ -365,38 +374,42 @@ class BlankFragment : Fragment() {
                 postDisplay.visibility = View.GONE
             }
 
-            if (isResultCalculated) {
-                resultTagsList.clear()
-                updateResultWithHashTags(
-                    resultTagsList,
-                    getActualPost(editTextPost.text.toString())
-                )
-                generateResultTags(view)
-                copyToClipboard.visibility =
-                    if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
-                resultWithHashTags.visibility =
-                    if (Utils.isResultWithHashtagsVisible()) View.VISIBLE else View.GONE
-                div2.visibility = if (Utils.isDiv2Visible()) View.VISIBLE else View.GONE
-                chipGroup.visibility = if (Utils.isChipGroupVisible()) View.VISIBLE else View.GONE
-                resultWithHashTags.text = Utils.getResultWithHashtagsText()
-                isResultCalculated = true
-
-                if (editTextPost.text.isEmpty()) {
-                    Utils.setPost(null)
-                } else {
-                    Utils.setPost(editTextPost.text.toString())
-                }
-                Utils.setTag(editTextTag.text.toString())
-                Utils.setChipClosed(false)
-            }
+//            if (isResultCalculated) {
+//                resultTagsList.clear()
+//                updateResultWithHashTags(
+//                    resultTagsList,
+//                    getActualPost(editTextPost.text.toString())
+//                )
+//                generateResultTags(view)
+//                copyToClipboard.visibility =
+//                    if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
+//                resultWithHashTags.visibility =
+//                    if (Utils.isResultWithHashtagsVisible()) View.VISIBLE else View.GONE
+//                div2.visibility = if (Utils.isDiv2Visible()) View.VISIBLE else View.GONE
+//                chipGroup.visibility = if (Utils.isChipGroupVisible()) View.VISIBLE else View.GONE
+//                resultWithHashTags.text = Utils.getResultWithHashtagsText()
+//                isResultCalculated = true
+//
+//                if (editTextPost.text.isEmpty()) {
+//                    Utils.setPost(null)
+//                } else {
+//                    Utils.setPost(editTextPost.text.toString())
+//                }
+//                Utils.setTag(editTextTag.text.toString())
+//                Utils.setChipClosed(false)
+//            }
         }
 
         submitButton.setOnClickListener {
             if (initialCheck()) {
                 progressDialog = ProgressDialog(activity)
 
-                if ((post_length.isChecked && Utils.getPost() == null) || Utils.getTag() == null || ((Utils.getPost() != null || editTextPost.text.isNotEmpty()) && Utils.getPost() != editTextPost.text.toString()) || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
+                if ((Utils.isConsiderPostLength() != postLength.isChecked) || (post_length.isChecked && Utils.getPost() == null) || (Utils.getTag() == null) || (((Utils.getPost() != null) || editTextPost.text.isNotEmpty()) && (Utils.getPost() != editTextPost.text.toString())) || (Utils.getTag() != editTextTag.text.toString()) || Utils.isChipClosed()) {
                     MyAsyncTask().execute()
+
+                    Utils.setConsiderPostLength(postLength.isChecked)
+                    Utils.setTag(editTextTag.text.toString())
+                    Utils.setChipClosed(false)
                 }
             }
         }
@@ -514,30 +527,30 @@ class BlankFragment : Fragment() {
             progressDialog.show()
             progressDialog.setContentView(R.layout.progress_dialog)
             progressDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            progressDialog.setCancelable(false)
         }
 
         override fun doInBackground(vararg params: Void): String? {
-            if ((post_length.isChecked && Utils.getPost() == null) || Utils.getTag() == null || ((Utils.getPost() != null || editTextPost.text.isNotEmpty()) && Utils.getPost() != editTextPost.text.toString()) || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
-                Utils.setChipsFromGroup(ArrayList())
-                resultTagsList.clear()
-                updateResultWithHashTagsForNewThread(
-                    resultTagsList,
-                    getActualPost(editTextPost.text.toString())
-                )
+//            if (Utils.isConsiderPostLength() != post_length.isChecked || (post_length.isChecked && Utils.getPost() == null) || Utils.getTag() == null || ((Utils.getPost() != null || editTextPost.text.isNotEmpty()) && Utils.getPost() != editTextPost.text.toString()) || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
+            Utils.setChipsFromGroup(ArrayList())
+            resultTagsList.clear()
+            updateResultWithHashTagsForNewThread(
+                resultTagsList,
+                getActualPost(editTextPost.text.toString())
+            )
 
 
-                view?.let { generateResultTags(it) }
+            view?.let { generateResultTags(it) }
 
-                isResultCalculated = true
+            isResultCalculated = true
 
-                if (editTextPost.text.isEmpty()) {
-                    Utils.setPost(null)
-                } else {
-                    Utils.setPost(editTextPost.text.toString())
-                }
-                Utils.setTag(editTextTag.text.toString())
-                Utils.setChipClosed(false)
+            if (editTextPost.text.isEmpty()) {
+                Utils.setPost(null)
+            } else {
+                Utils.setPost(editTextPost.text.toString())
             }
+
+            //            }
             activity?.let { it1 -> hideKeyboard(it1) }
 
             return "success"

@@ -53,7 +53,7 @@ class DatabaseAccess(context: Context) {
         }
 
         val query2 =
-            "SELECT name FROM Tags WHERE name LIKE ('%' || \'$tag\') ORDER BY $platform ASC"
+            "SELECT name FROM Tags WHERE name LIKE ('%' || \'$tag\' || '%') ORDER BY $platform ASC"
         val result2 = db?.rawQuery(query2, null)
         if (result2 != null) {
             if (result2.moveToFirst()) {
@@ -66,21 +66,21 @@ class DatabaseAccess(context: Context) {
 
             result2.close()
         }
-
-        val query3 =
-            "SELECT name FROM Tags WHERE name LIKE ('_%' || \'$tag\' || '_%') ORDER BY $platform ASC"
-        val result3 = db?.rawQuery(query3, null)
-        if (result3 != null) {
-            if (result3.moveToFirst()) {
-                do {
-                    val currentTag: String = result3.getString(result3.getColumnIndex(COL_NAME))
-                    list.add(currentTag)
-                    Utils.setHashTagsFound(Utils.getHashTagsFound() + 1)
-                } while (result3.moveToNext() && Utils.getHashTagsFound() < 33)
-            }
-
-            result3.close()
-        }
+//
+//        val query3 =
+//            "SELECT name FROM Tags WHERE name LIKE ('_%' || \'$tag\' || '_%') ORDER BY $platform ASC"
+//        val result3 = db?.rawQuery(query3, null)
+//        if (result3 != null) {
+//            if (result3.moveToFirst()) {
+//                do {
+//                    val currentTag: String = result3.getString(result3.getColumnIndex(COL_NAME))
+//                    list.add(currentTag)
+//                    Utils.setHashTagsFound(Utils.getHashTagsFound() + 1)
+//                } while (result3.moveToNext() && Utils.getHashTagsFound() < 33)
+//            }
+//
+//            result3.close()
+//        }
 
         return list.distinct().toMutableList()
     }
