@@ -6,7 +6,7 @@ public class Utils {
     private static String tag = null;
     private static String post = null;
     private static boolean chipClosed = false;
-
+    
 
     public static int getTabPosition() {
         return tabPosition;

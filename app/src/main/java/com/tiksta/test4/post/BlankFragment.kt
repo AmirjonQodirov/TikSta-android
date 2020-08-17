@@ -2,11 +2,14 @@ package com.tiksta.test4.post
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +27,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.tiksta.test4.R
 import com.tiksta.test4.post.data.DatabaseAccess
+import com.tiksta.test4.post.data.MyAsyncTask
 import kotlinx.android.synthetic.main.activity_post_filling.*
 import java.lang.Character.isWhitespace
 import java.lang.Character.toLowerCase
@@ -36,18 +40,7 @@ class BlankFragment : Fragment() {
     private lateinit var viewModel: BlankViewModel
     private var resultTagsList: ArrayList<String> = ArrayList()
     private var isResultCalculated = false
-
-    private fun hideKeyboard(activity: Activity) {
-        val imm: InputMethodManager =
-            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        //Find the currently focused view, so we can grab the correct window token from it.
-        var view = activity.currentFocus
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = View(activity)
-        }
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
+    private lateinit var progressDialog: ProgressDialog
 
     private fun getActualPost(post: String): String {
         return if (post_length.isChecked && post_display.isChecked && (post.isNotEmpty() && !post[post.length - 1].isWhitespace())) {
@@ -85,11 +78,6 @@ class BlankFragment : Fragment() {
         resultWithHashTags.visibility = View.VISIBLE
         resultWithHashTags.text = result
 
-//        if (resultTagsList.isEmpty() && !post_display.isChecked) {
-//            copyToClipboard.visibility = View.GONE
-//            resultWithHashTags.visibility = View.GONE
-//            div2.visibility = View.GONE
-//        }
     }
 
     private fun generateResultTags(view: View) {
@@ -129,7 +117,7 @@ class BlankFragment : Fragment() {
 
 //        val db = context?.let { it1 -> DataBaseHandler(it1) }
         val db = DatabaseAccess.getInstance(view.context)
-        db.open()
+//        db.open()
 
         val tags = editTextTag.text.toString() + " "
         var currentTag = StringBuilder()
@@ -155,8 +143,10 @@ class BlankFragment : Fragment() {
 
 
         for (tag in allTags) {
-            val tmpTags = db.readData(tag, platform)
 
+            val tmpTags = db.readData(tag, platform)
+            progressDialog = ProgressDialog(activity)
+//            val tmpTags =  MyAsyncTask(progressDialog, tag,platform).execute(db).get()
             for (tmpTag in tmpTags) {
                 if (!hasTag.containsKey(tmpTag)) {
                     list.add(tmpTag)
@@ -279,6 +269,8 @@ class BlankFragment : Fragment() {
         updateResultWithHashTags(resultTagsList, getActualPost(currentPostState))
     }
 
+
+
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -289,7 +281,7 @@ class BlankFragment : Fragment() {
 //        Utils.setPostActivityView(view)
 
         if (!Utils.isTiktokMaxLengthSet() && Utils.getTabPosition() == 0) {
-            println("changing bg image... 222222222222222222222222222222")
+//            println("changing bg image... 222222222222222222222222222222")
             val maxLength = 100
 
             val tmp = view?.findViewById<EditText>(R.id.editTextPost)
@@ -334,27 +326,13 @@ class BlankFragment : Fragment() {
             }
         }
 
-
         submitButton.setOnClickListener {
-            if ((post_length.isChecked && Utils.getPost() == null) || Utils.getTag() == null || ((Utils.getPost() != null || editTextPost.text.isNotEmpty()) && Utils.getPost() != editTextPost.text.toString()) || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
-                resultTagsList.clear()
-                updateResultWithHashTags(
-                    resultTagsList,
-                    getActualPost(editTextPost.text.toString())
-                )
-                generateResultTags(view)
-                isResultCalculated = true
-
-                if (editTextPost.text.isEmpty()) {
-                    Utils.setPost(null)
-                } else {
-                    Utils.setPost(editTextPost.text.toString())
-                }
-                Utils.setTag(editTextTag.text.toString())
-                Utils.setChipClosed(false)
+            chipGroup.removeAllViews()
+            progressDialog = ProgressDialog(activity)
+            activity?.let { it1 ->
+                MyAsyncTask(progressDialog,post_length,editTextPost,editTextTag,resultTagsList,view,isResultCalculated,
+                    it1,post_display,copyToClipboard,resultWithHashTags,div2,chipGroup).execute()
             }
-
-            activity?.let { it1 -> hideKeyboard(it1) }
         }
 
         val copyToClipboardManager: Button = view.findViewById(R.id.copyToClipboard)
