@@ -14,7 +14,7 @@
         app:tabGravity="fill"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextColor="@android:color/white" />
+        app:tabTextColor="@color/colorAccent" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
@@ -45,7 +45,6 @@
         <!--                android:text="@string/instagram" />-->
 
         <!--        </com.google.android.material.tabs.TabLayout>-->
-
     </androidx.viewpager.widget.ViewPager>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,7 @@
 package com.tiksta.test4.post
 
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.tiksta.test4.R
@@ -42,6 +37,8 @@ class PostActivity : BaseActivity() {
 
         tabLayout = findViewById(R.id.tabs)
         tabLayout.setupWithViewPager(pager)
+        tabs.selectTab(tabLayout.getTabAt(0))
+        tabs.selectTab(tabLayout.getTabAt(Utils.getTabPosition()))
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {

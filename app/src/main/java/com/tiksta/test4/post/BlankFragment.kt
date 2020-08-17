@@ -290,14 +290,14 @@ class BlankFragment : Fragment() {
 
         if (!Utils.isTiktokMaxLengthSet() && Utils.getTabPosition() == 0) {
             println("changing bg image... 222222222222222222222222222222")
-            Utils.setTiktokMaxLengthSet(true)
             val maxLength = 100
 
-            val tmp = view.findViewById<EditText>(R.id.editTextPost)
+            val tmp = view?.findViewById<EditText>(R.id.editTextPost)
             if (tmp != null) {
                 tmp.filters = arrayOf<InputFilter>(
                     InputFilter.LengthFilter(maxLength)
                 )
+                Utils.setTiktokMaxLengthSet(true)
             }
         }
 

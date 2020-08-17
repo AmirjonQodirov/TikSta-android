@@ -7,31 +7,30 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme2" parent="Theme.AppCompat">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
     <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlActivated">@color/colorPrimary</item>
-        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="android:textColorHighlight">@color/colorAccent</item>
     </style>
 
     <style name="MySwitch" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
-        <item name="colorSwitchThumbNormal">#8B00EE</item>
-        <item name="android:colorForeground">#A700EE</item>
+        <item name="colorSwitchThumbNormal">@color/colorAccentSwitch</item>
+        <item name="android:colorForeground">@color/colorAccentSwitch</item>
     </style>
 
     <style name="AppTheme.SlidrActivityTheme" parent="Theme.MaterialComponents.Light">
         <item name="android:windowIsTranslucent">true</item>
-        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="MyButtonTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="MyBottomNavigationTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
     </style>
 </resources>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#7232F2</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FF0000</color>
+<!--    #7232F2</color>-->
     //4.#4F2C7E
     //2.#AF62FE
     //1.#854798
-    <color name="colorAccent">#fff</color>
-    <color name="focusColor">#3E3939</color>
+    <color name="colorAccent">#F7A5AB</color>
+    <color name="colorAccentSwitch">#AA0000</color>
 </resources>
