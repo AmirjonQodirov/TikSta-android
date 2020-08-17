@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.os.AsyncTask
+import com.tiksta.test4.post.Utils
 
 class DatabaseAccess(context: Context) {
     private var openHelper: SQLiteOpenHelper = DatabaseOpenHelper(context)
@@ -38,15 +39,14 @@ class DatabaseAccess(context: Context) {
         val query1 =
             "SELECT name FROM Tags WHERE name LIKE (\'$tag\' || '%') ORDER BY $platform ASC"
 
-        var count = 0
         val result1 = db?.rawQuery(query1, null)
         if (result1 != null) {
             if (result1.moveToFirst()) {
                 do {
                     val currentTag: String = result1.getString(result1.getColumnIndex(COL_NAME))
                     list.add(currentTag)
-                    ++count
-                } while (result1.moveToNext() && count < 33)
+                    Utils.setHashTagsFound(Utils.getHashTagsFound() + 1)
+                } while (result1.moveToNext() && Utils.getHashTagsFound() < 33)
             }
 
             result1.close()
@@ -60,8 +60,8 @@ class DatabaseAccess(context: Context) {
                 do {
                     val currentTag: String = result2.getString(result2.getColumnIndex(COL_NAME))
                     list.add(currentTag)
-                    ++count
-                } while (result2.moveToNext() && count < 33)
+                    Utils.setHashTagsFound(Utils.getHashTagsFound() + 1)
+                } while (result2.moveToNext() && Utils.getHashTagsFound() < 33)
             }
 
             result2.close()
@@ -75,8 +75,8 @@ class DatabaseAccess(context: Context) {
                 do {
                     val currentTag: String = result3.getString(result3.getColumnIndex(COL_NAME))
                     list.add(currentTag)
-                    ++count
-                } while (result3.moveToNext() && count < 33)
+                    Utils.setHashTagsFound(Utils.getHashTagsFound() + 1)
+                } while (result3.moveToNext() && Utils.getHashTagsFound() < 33)
             }
 
             result3.close()

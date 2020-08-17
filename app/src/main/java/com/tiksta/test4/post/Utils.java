@@ -16,6 +16,8 @@ public class Utils {
     private static boolean div2Visible = false;
     private static boolean chipGroupVisible = false;
     private static String resultWithHashtagsText = "";
+    private static int hashTagsFound = 0;
+    private static String errorMessage = null;
 
     public static int getTabPosition() {
         return tabPosition;
@@ -110,5 +112,21 @@ public class Utils {
 
     public static void setResultWithHashtagsText(String resultWithHashtagsText) {
         Utils.resultWithHashtagsText = resultWithHashtagsText;
+    }
+
+    public static int getHashTagsFound() {
+        return hashTagsFound;
+    }
+
+    public static void setHashTagsFound(int hashTagsFound) {
+        Utils.hashTagsFound = hashTagsFound;
+    }
+
+    public static String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public static void setErrorMessage(String errorMessage) {
+        Utils.errorMessage = errorMessage;
     }
 }

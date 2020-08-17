@@ -41,8 +41,13 @@ class BlankFragment : Fragment() {
     private var resultTagsList: ArrayList<String> = ArrayList()
     private var isResultCalculated = false
     private lateinit var progressDialog: ProgressDialog
+    private var platform = "instagram_id"
+    private var hasTag: TreeMap<String, Boolean> = TreeMap()
+    private var allTags: ArrayList<String> = ArrayList()
+    private var hashTagsCount = 0
 
     private fun addChipsToGroup() {
+        chipGroup.removeAllViews()
         for (chip in Utils.getChipsFromGroup()) {
             chipGroup.addView(chip)
         }
@@ -72,7 +77,10 @@ class BlankFragment : Fragment() {
         }
     }
 
-    private fun updateResultWithHashTagsForNewThread(resultTagsList: ArrayList<String>, post: String) {
+    private fun updateResultWithHashTagsForNewThread(
+        resultTagsList: ArrayList<String>,
+        post: String
+    ) {
         if ((resultTagsList.isEmpty() && (!post_length.isChecked || (post_length.isChecked && (editTextPost.text.isEmpty() || !post_display.isChecked))))) {
             Utils.setCopyToClipboardVisible(false)
             Utils.setResultWithHashtagsVisible(false)
@@ -124,16 +132,10 @@ class BlankFragment : Fragment() {
         copyToClipboard.visibility = View.VISIBLE
         resultWithHashTags.visibility = View.VISIBLE
         resultWithHashTags.text = result
-
     }
 
-    private fun generateResultTags(view: View) {
-        val chipGroup: ChipGroup = view.findViewById(R.id.chipGroup)
-        val inflater: LayoutInflater = LayoutInflater.from(view.context)
-
-
+    private fun initialCheck(): Boolean {
         val tabPosition = Utils.getTabPosition()
-        var platform = "instagram_id"
 
         if (tabPosition == 0) {
             platform = "tiktok_id"
@@ -141,34 +143,29 @@ class BlankFragment : Fragment() {
 
         val tagLength = editTextTag.length()
         if (tagLength == 0) {
-             editTextTag.error = "This field is required!"
-            return
+            editTextTag.error = "This field is required!"
+            return false
         }
 
         val postLength = editTextPost.length()
         if (postLength < 0) {
             editTextPost.error = "Incorrect length!"
-            return
+            return false
         } else if (post_length.isChecked && postLength == 0) {
             editTextPost.error = "This field is required!"
-            return
+            return false
         } else if (platform == "instagram_id" && post_length.isChecked && postLength >= 2199) {
             editTextPost.error = "Your post is too long!"
-            return
+            return false
         } else if (platform == "tiktok_id" && post_length.isChecked && postLength >= 99) {
             editTextPost.error = "Your post is too long!"
-            return
+            return false
         }
-
-
-//        val db = context?.let { it1 -> DataBaseHandler(it1) }
-        val db = DatabaseAccess.getInstance(view.context)
-        db.open()
 
         val tags = editTextTag.text.toString() + " "
         var currentTag = StringBuilder()
-        val allTags: ArrayList<String> = ArrayList()
 
+        allTags = ArrayList()
         for (c in tags) {
             if (isWhitespace(c) || c == '#') {
                 if (currentTag.toString().isNotEmpty()) {
@@ -180,36 +177,13 @@ class BlankFragment : Fragment() {
             }
         }
 
-        val hasTag: TreeMap<String, Boolean> = TreeMap()
-
-        print("Has: ")
-
-        //todo
-
-        val list: ArrayList<String> = ArrayList()
-//            activity?.let { MyAsyncTaskMain(progressDialog, platform, allTags, db, it, hasTag).execute().get() }
-        for (tag in allTags) {
-
-            val tmpTags = db.readData(tag, platform)
-//            val tmpTags =  MyAsyncTask(progressDialog, tag,platform).execute(db).get()
-            for (tmpTag in tmpTags) {
-                if (!hasTag.containsKey(tmpTag)) {
-                    list.add(tmpTag)
-                    print("$tmpTag ")
-                    hasTag[tmpTag] = true
-                }
-            }
-        }
-
-        db.close()
-
         var currentHashTag = ""
-        var hashTagsCount = 0
         var hashTagStarted = false
 
+        hasTag = TreeMap()
+        hashTagsCount = 0
 
-        val currentPostState = editTextPost.text.toString()
-        val currentPostStateFor = "$currentPostState "
+        val currentPostStateFor = "$editTextPost.text.toString() "
         for (c in currentPostStateFor) {
             if (!hashTagStarted && c == '#') {
                 hashTagStarted = true
@@ -219,9 +193,7 @@ class BlankFragment : Fragment() {
             if (hashTagStarted) {
                 if (c == '#' || !(c.isLetter() || c.isDigit())) {
                     if (currentHashTag.isNotEmpty()) {
-                        if (hasTag.containsKey(currentHashTag)) {
-                            hasTag[currentHashTag] = false
-                        }
+                        hasTag[currentHashTag] = false
 
                         println("TAG: " + currentHashTag)
 
@@ -244,12 +216,53 @@ class BlankFragment : Fragment() {
         println("AAAAAAAAAAAAAAAAAAAAA " + hashTagsCount + ", " + platform)
         if (platform == "instagram_id" && hashTagsCount > 30) {
             editTextPost.error = "Too much hashtags in your post! ($hashTagsCount > 30)"
-            return
+            return false
         } else if (platform == "instagram_id" && hashTagsCount == 30) {
-            Toast.makeText(view.context, "You already have 30/30 hashtags!", Toast.LENGTH_SHORT)
+            Toast.makeText(view?.context, "You already have 30/30 hashtags!", Toast.LENGTH_SHORT)
                 .show()
-            return
+            return false
         }
+
+        return true
+    }
+
+    private fun generateResultTags(view: View) {
+        val chipGroup: ChipGroup = view.findViewById(R.id.chipGroup)
+        val inflater: LayoutInflater = LayoutInflater.from(view.context)
+
+//        val db = context?.let { it1 -> DataBaseHandler(it1) }
+
+        print("Has: ")
+
+        //todo
+
+        val list: ArrayList<String> = ArrayList()
+//            activity?.let { MyAsyncTaskMain(progressDialog, platform, allTags, db, it, hasTag).execute().get() }
+        val db = DatabaseAccess.getInstance(view.context)
+        db.open()
+        Utils.setHashTagsFound(0)
+        for (tag in allTags) {
+
+            val tmpTags = db.readData(tag, platform)
+//            val tmpTags =  MyAsyncTask(progressDialog, tag,platform).execute(db).get()
+            for (tmpTag in tmpTags) {
+                if (!hasTag.containsKey(tmpTag)) {
+                    list.add(tmpTag)
+                    print("$tmpTag ")
+                    hasTag[tmpTag] = true
+
+                    if (list.size == 33) {
+                        break
+                    }
+                }
+            }
+
+            if (list.size == 33) {
+                break
+            }
+        }
+
+        db.close()
 
         if (list != null) {
             val data: ArrayList<String> = ArrayList()
@@ -263,10 +276,11 @@ class BlankFragment : Fragment() {
             println()
 
             if (data.isEmpty()) {
-                Toast.makeText(view.context, "No hashtags found!", Toast.LENGTH_SHORT).show()
+                Utils.setErrorMessage("No hashtags found!")
                 return
             }
 
+            val postLength = editTextPost.length()
             val postFit = if (post_length.isChecked) {
                 PostFit(postLength, data)
             } else {
@@ -281,14 +295,11 @@ class BlankFragment : Fragment() {
             }
 
             if (resultTagsList.isEmpty()) {
-                Toast.makeText(
-                    view.context,
-                    "Not enough space to insert even a hashtag!",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Utils.setErrorMessage("Not enough space to insert even a hashtag!")
                 return
             }
 
+            val currentPostState = editTextPost.text.toString()
             for (tag in resultTagsList) {
                 val chip: Chip = inflater.inflate(R.layout.chip_item, null, false) as Chip
                 chip.text = tag
@@ -316,7 +327,6 @@ class BlankFragment : Fragment() {
             updateResultWithHashTagsForNewThread(resultTagsList, getActualPost(currentPostState))
         }
     }
-
 
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
@@ -362,8 +372,10 @@ class BlankFragment : Fragment() {
                     getActualPost(editTextPost.text.toString())
                 )
                 generateResultTags(view)
-                copyToClipboard.visibility = if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
-                resultWithHashTags.visibility = if (Utils.isResultWithHashtagsVisible()) View.VISIBLE else View.GONE
+                copyToClipboard.visibility =
+                    if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
+                resultWithHashTags.visibility =
+                    if (Utils.isResultWithHashtagsVisible()) View.VISIBLE else View.GONE
                 div2.visibility = if (Utils.isDiv2Visible()) View.VISIBLE else View.GONE
                 chipGroup.visibility = if (Utils.isChipGroupVisible()) View.VISIBLE else View.GONE
                 resultWithHashTags.text = Utils.getResultWithHashtagsText()
@@ -380,9 +392,13 @@ class BlankFragment : Fragment() {
         }
 
         submitButton.setOnClickListener {
-            progressDialog = ProgressDialog(activity)
+            if (initialCheck()) {
+                progressDialog = ProgressDialog(activity)
 
-            MyAsyncTask().execute()
+                if ((post_length.isChecked && Utils.getPost() == null) || Utils.getTag() == null || ((Utils.getPost() != null || editTextPost.text.isNotEmpty()) && Utils.getPost() != editTextPost.text.toString()) || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
+                    MyAsyncTask().execute()
+                }
+            }
         }
 
         val copyToClipboardManager: Button = view.findViewById(R.id.copyToClipboard)
@@ -500,8 +516,9 @@ class BlankFragment : Fragment() {
             progressDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         }
 
-        override fun doInBackground(vararg params: Void): String {
+        override fun doInBackground(vararg params: Void): String? {
             if ((post_length.isChecked && Utils.getPost() == null) || Utils.getTag() == null || ((Utils.getPost() != null || editTextPost.text.isNotEmpty()) && Utils.getPost() != editTextPost.text.toString()) || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
+                Utils.setChipsFromGroup(ArrayList())
                 resultTagsList.clear()
                 updateResultWithHashTagsForNewThread(
                     resultTagsList,
@@ -523,23 +540,30 @@ class BlankFragment : Fragment() {
             }
             activity?.let { it1 -> hideKeyboard(it1) }
 
-            return "Success"
+            return "success"
         }
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             progressDialog.dismiss()
 
-            copyToClipboard.visibility = if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
-            resultWithHashTags.visibility = if (Utils.isResultWithHashtagsVisible()) View.VISIBLE else View.GONE
+            copyToClipboard.visibility =
+                if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
+            resultWithHashTags.visibility =
+                if (Utils.isResultWithHashtagsVisible()) View.VISIBLE else View.GONE
             div2.visibility = if (Utils.isDiv2Visible()) View.VISIBLE else View.GONE
             chipGroup.visibility = if (Utils.isChipGroupVisible()) View.VISIBLE else View.GONE
             resultWithHashTags.text = Utils.getResultWithHashtagsText()
 
             addChipsToGroup()
+
+            if (Utils.getErrorMessage() != null) {
+                Toast.makeText(view?.context, Utils.getErrorMessage(), Toast.LENGTH_SHORT)
+                    .show()
+                Utils.setErrorMessage(null)
+            }
         }
     }
-
 }
 
 /*
