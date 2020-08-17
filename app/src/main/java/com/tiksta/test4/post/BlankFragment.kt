@@ -9,7 +9,6 @@ import android.content.Context
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
@@ -27,8 +26,9 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.tiksta.test4.R
 import com.tiksta.test4.post.data.DatabaseAccess
-import com.tiksta.test4.post.data.MyAsyncTask
+import com.tiksta.test4.post.data.MyAsyncTaskMain
 import kotlinx.android.synthetic.main.activity_post_filling.*
+import kotlinx.android.synthetic.main.progress_dialog.*
 import java.lang.Character.isWhitespace
 import java.lang.Character.toLowerCase
 import java.util.*
@@ -42,6 +42,26 @@ class BlankFragment : Fragment() {
     private var isResultCalculated = false
     private lateinit var progressDialog: ProgressDialog
 
+    private fun addChipsToGroup() {
+        for (chip in Utils.getChipsFromGroup()) {
+            chipGroup.addView(chip)
+        }
+
+        Utils.setChipsFromGroup(ArrayList())
+    }
+
+    private fun hideKeyboard(activity: Activity) {
+        val imm: InputMethodManager =
+            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = activity.currentFocus
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
     private fun getActualPost(post: String): String {
         return if (post_length.isChecked && post_display.isChecked && (post.isNotEmpty() && !post[post.length - 1].isWhitespace())) {
             "$post\n"
@@ -50,6 +70,33 @@ class BlankFragment : Fragment() {
         } else {
             ""
         }
+    }
+
+    private fun updateResultWithHashTagsForNewThread(resultTagsList: ArrayList<String>, post: String) {
+        if ((resultTagsList.isEmpty() && (!post_length.isChecked || (post_length.isChecked && (editTextPost.text.isEmpty() || !post_display.isChecked))))) {
+            Utils.setCopyToClipboardVisible(false)
+            Utils.setResultWithHashtagsVisible(false)
+            Utils.setDiv2Visible(false)
+
+            return
+        }
+
+        var result = post
+        var isFirst = true
+        for (tag in resultTagsList) {
+            if (isFirst) {
+                result += "#$tag"
+                isFirst = false
+            } else {
+                result += " #$tag"
+            }
+        }
+
+        Utils.setChipGroupVisible(true)
+        Utils.setCopyToClipboardVisible(true)
+        Utils.setResultWithHashtagsVisible(true)
+        Utils.setDiv2Visible(true)
+        Utils.setResultWithHashtagsText(result)
     }
 
     private fun updateResultWithHashTags(resultTagsList: ArrayList<String>, post: String) {
@@ -84,7 +131,6 @@ class BlankFragment : Fragment() {
         val chipGroup: ChipGroup = view.findViewById(R.id.chipGroup)
         val inflater: LayoutInflater = LayoutInflater.from(view.context)
 
-        chipGroup.removeAllViews()
 
         val tabPosition = Utils.getTabPosition()
         var platform = "instagram_id"
@@ -95,7 +141,7 @@ class BlankFragment : Fragment() {
 
         val tagLength = editTextTag.length()
         if (tagLength == 0) {
-            editTextTag.error = "This field is required!"
+             editTextTag.error = "This field is required!"
             return
         }
 
@@ -117,7 +163,7 @@ class BlankFragment : Fragment() {
 
 //        val db = context?.let { it1 -> DataBaseHandler(it1) }
         val db = DatabaseAccess.getInstance(view.context)
-//        db.open()
+        db.open()
 
         val tags = editTextTag.text.toString() + " "
         var currentTag = StringBuilder()
@@ -134,18 +180,17 @@ class BlankFragment : Fragment() {
             }
         }
 
-        val list: ArrayList<String> = ArrayList()
         val hasTag: TreeMap<String, Boolean> = TreeMap()
 
         print("Has: ")
 
         //todo
 
-
+        val list: ArrayList<String> = ArrayList()
+//            activity?.let { MyAsyncTaskMain(progressDialog, platform, allTags, db, it, hasTag).execute().get() }
         for (tag in allTags) {
 
             val tmpTags = db.readData(tag, platform)
-            progressDialog = ProgressDialog(activity)
 //            val tmpTags =  MyAsyncTask(progressDialog, tag,platform).execute(db).get()
             for (tmpTag in tmpTags) {
                 if (!hasTag.containsKey(tmpTag)) {
@@ -206,67 +251,70 @@ class BlankFragment : Fragment() {
             return
         }
 
-        val data: ArrayList<String> = ArrayList()
-        print("Result: ")
-        for (element in list) {
-            if (hasTag.containsKey(element) && hasTag[element] == true) {
-                data.add(element)
-                print(element + " ")
+        if (list != null) {
+            val data: ArrayList<String> = ArrayList()
+            print("Result: ")
+            for (element in list) {
+                if (hasTag.containsKey(element) && hasTag[element] == true) {
+                    data.add(element)
+                    print(element + " ")
+                }
             }
-        }
-        println()
+            println()
 
-        if (data.isEmpty()) {
-            Toast.makeText(view.context, "No hashtags found!", Toast.LENGTH_SHORT).show()
-            return
-        }
+            if (data.isEmpty()) {
+                Toast.makeText(view.context, "No hashtags found!", Toast.LENGTH_SHORT).show()
+                return
+            }
 
-        val postFit = if (post_length.isChecked) {
-            PostFit(postLength, data)
-        } else {
-            PostFit(0, data)
-        }
+            val postFit = if (post_length.isChecked) {
+                PostFit(postLength, data)
+            } else {
+                PostFit(0, data)
+            }
 
-        // Using 'switch' because code will look be more elegant if we add new platforms
-        when (platform) {
-            "instagram_id" -> resultTagsList =
-                postFit.instagramFit(hashTagsCount) as ArrayList<String>
-            "tiktok_id" -> resultTagsList = postFit.tikTokFit() as ArrayList<String>
-        }
+            // Using 'switch' because code will look be more elegant if we add new platforms
+            when (platform) {
+                "instagram_id" -> resultTagsList =
+                    postFit.instagramFit(hashTagsCount) as ArrayList<String>
+                "tiktok_id" -> resultTagsList = postFit.tikTokFit() as ArrayList<String>
+            }
 
-        if (resultTagsList.isEmpty()) {
-            Toast.makeText(
-                view.context,
-                "Not enough space to insert even a hashtag!",
-                Toast.LENGTH_SHORT
-            ).show()
-            return
-        }
+            if (resultTagsList.isEmpty()) {
+                Toast.makeText(
+                    view.context,
+                    "Not enough space to insert even a hashtag!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
 
-        for (tag in resultTagsList) {
-            val chip: Chip = inflater.inflate(R.layout.chip_item, null, false) as Chip
-            chip.text = tag
-            chip.setOnCloseIconClickListener {
-                chipGroup.removeView(chip)
-                Utils.setChipClosed(true)
+            for (tag in resultTagsList) {
+                val chip: Chip = inflater.inflate(R.layout.chip_item, null, false) as Chip
+                chip.text = tag
+                chip.setOnCloseIconClickListener {
+                    chipGroup.removeView(chip)
+                    Utils.setChipClosed(true)
 
-                if (resultTagsList.size == 1) {
-                    Toast.makeText(
-                        view.context,
-                        "All hashtags have been removed!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    if (resultTagsList.size == 1) {
+                        Toast.makeText(
+                            view.context,
+                            "All hashtags have been removed!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    resultTagsList.remove(tag)
+
+                    updateResultWithHashTags(resultTagsList, getActualPost(currentPostState))
                 }
 
-                resultTagsList.remove(tag)
-
-                updateResultWithHashTags(resultTagsList, getActualPost(currentPostState))
+                Utils.addChip(chip)
+//                chipGroup.addView(chip)
             }
 
-            chipGroup.addView(chip)
+            updateResultWithHashTagsForNewThread(resultTagsList, getActualPost(currentPostState))
         }
-
-        updateResultWithHashTags(resultTagsList, getActualPost(currentPostState))
     }
 
 
@@ -314,6 +362,11 @@ class BlankFragment : Fragment() {
                     getActualPost(editTextPost.text.toString())
                 )
                 generateResultTags(view)
+                copyToClipboard.visibility = if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
+                resultWithHashTags.visibility = if (Utils.isResultWithHashtagsVisible()) View.VISIBLE else View.GONE
+                div2.visibility = if (Utils.isDiv2Visible()) View.VISIBLE else View.GONE
+                chipGroup.visibility = if (Utils.isChipGroupVisible()) View.VISIBLE else View.GONE
+                resultWithHashTags.text = Utils.getResultWithHashtagsText()
                 isResultCalculated = true
 
                 if (editTextPost.text.isEmpty()) {
@@ -327,12 +380,9 @@ class BlankFragment : Fragment() {
         }
 
         submitButton.setOnClickListener {
-            chipGroup.removeAllViews()
             progressDialog = ProgressDialog(activity)
-            activity?.let { it1 ->
-                MyAsyncTask(progressDialog,post_length,editTextPost,editTextTag,resultTagsList,view,isResultCalculated,
-                    it1,post_display,copyToClipboard,resultWithHashTags,div2,chipGroup).execute()
-            }
+
+            MyAsyncTask().execute()
         }
 
         val copyToClipboardManager: Button = view.findViewById(R.id.copyToClipboard)
@@ -354,7 +404,7 @@ class BlankFragment : Fragment() {
                     resultTagsList,
                     getActualPost(editTextPost.text.toString())
                 )
-                submitButton.performClick()
+//                submitButton.performClick()
             }
         }
 
@@ -435,6 +485,59 @@ class BlankFragment : Fragment() {
 //            }
         }
         super.onSaveInstanceState(outState)
+    }
+
+    inner class MyAsyncTask : AsyncTask<Void, Int, String>() {
+
+        private var result: String = "";
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+//            progressBar.visibility = View.VISIBLE
+            progressDialog = ProgressDialog(view?.context)
+            progressDialog.show()
+            progressDialog.setContentView(R.layout.progress_dialog)
+            progressDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        }
+
+        override fun doInBackground(vararg params: Void): String {
+            if ((post_length.isChecked && Utils.getPost() == null) || Utils.getTag() == null || ((Utils.getPost() != null || editTextPost.text.isNotEmpty()) && Utils.getPost() != editTextPost.text.toString()) || Utils.getTag() != editTextTag.text.toString() || Utils.isChipClosed()) {
+                resultTagsList.clear()
+                updateResultWithHashTagsForNewThread(
+                    resultTagsList,
+                    getActualPost(editTextPost.text.toString())
+                )
+
+
+                view?.let { generateResultTags(it) }
+
+                isResultCalculated = true
+
+                if (editTextPost.text.isEmpty()) {
+                    Utils.setPost(null)
+                } else {
+                    Utils.setPost(editTextPost.text.toString())
+                }
+                Utils.setTag(editTextTag.text.toString())
+                Utils.setChipClosed(false)
+            }
+            activity?.let { it1 -> hideKeyboard(it1) }
+
+            return "Success"
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            progressDialog.dismiss()
+
+            copyToClipboard.visibility = if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
+            resultWithHashTags.visibility = if (Utils.isResultWithHashtagsVisible()) View.VISIBLE else View.GONE
+            div2.visibility = if (Utils.isDiv2Visible()) View.VISIBLE else View.GONE
+            chipGroup.visibility = if (Utils.isChipGroupVisible()) View.VISIBLE else View.GONE
+            resultWithHashTags.text = Utils.getResultWithHashtagsText()
+
+            addChipsToGroup()
+        }
     }
 
 }

@@ -1,12 +1,21 @@
 package com.tiksta.test4.post;
 
+import com.google.android.material.chip.Chip;
+
+import java.util.ArrayList;
+
 public class Utils {
     private static int tabPosition = 0;
     private static boolean tiktokMaxLengthSet = false;
     private static String tag = null;
     private static String post = null;
     private static boolean chipClosed = false;
-    
+    private static ArrayList<Chip> chipsFromGroup = new ArrayList<>();
+    private static boolean copyToClipboardVisible = false;
+    private static boolean resultWithHashtagsVisible = false;
+    private static boolean div2Visible = false;
+    private static boolean chipGroupVisible = false;
+    private static String resultWithHashtagsText = "";
 
     public static int getTabPosition() {
         return tabPosition;
@@ -49,5 +58,57 @@ public class Utils {
 
     public static void setChipClosed(boolean chipClosed) {
         Utils.chipClosed = chipClosed;
+    }
+
+    public static ArrayList<Chip> getChipsFromGroup() {
+        return chipsFromGroup;
+    }
+
+    public static void setChipsFromGroup(ArrayList<Chip> chipsFromGroup) {
+        Utils.chipsFromGroup = chipsFromGroup;
+    }
+
+    public static void addChip(Chip chip) {
+        chipsFromGroup.add(chip);
+    }
+
+    public static boolean isCopyToClipboardVisible() {
+        return copyToClipboardVisible;
+    }
+
+    public static void setCopyToClipboardVisible(boolean copyToClipboardVisible) {
+        Utils.copyToClipboardVisible = copyToClipboardVisible;
+    }
+
+    public static boolean isResultWithHashtagsVisible() {
+        return resultWithHashtagsVisible;
+    }
+
+    public static void setResultWithHashtagsVisible(boolean resultWithHashtagsVisible) {
+        Utils.resultWithHashtagsVisible = resultWithHashtagsVisible;
+    }
+
+    public static boolean isDiv2Visible() {
+        return div2Visible;
+    }
+
+    public static void setDiv2Visible(boolean div2Visible) {
+        Utils.div2Visible = div2Visible;
+    }
+
+    public static boolean isChipGroupVisible() {
+        return chipGroupVisible;
+    }
+
+    public static void setChipGroupVisible(boolean chipGroupVisible) {
+        Utils.chipGroupVisible = chipGroupVisible;
+    }
+
+    public static String getResultWithHashtagsText() {
+        return resultWithHashtagsText;
+    }
+
+    public static void setResultWithHashtagsText(String resultWithHashtagsText) {
+        Utils.resultWithHashtagsText = resultWithHashtagsText;
     }
 }
