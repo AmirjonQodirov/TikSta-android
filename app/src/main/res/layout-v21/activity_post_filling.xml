@@ -16,12 +16,24 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="29dp">
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Search hashtags"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="0dp"
+            android:textSize="25sp"
+            app:layout_constraintTop_toTopOf="parent"/>
+
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/post_length"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_margin="12dp"
             android:layout_marginBottom="0dp"
             android:theme="@style/MySwitch"
             android:textSize="16sp"
@@ -30,7 +42,7 @@
             android:trackTint="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
             tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
 
         <androidx.appcompat.widget.SwitchCompat
@@ -38,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:layout_margin="4dp"
+            android:layout_margin="12dp"
             android:layout_marginBottom="0dp"
             android:theme="@style/MySwitch"
             android:text="Display post along hashtags?"
@@ -51,10 +63,11 @@
 
         <EditText
             android:id="@+id/editTextTag"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="hashtag/theme here..."
+            android:layout_marginStart="16dp"
             android:theme="@style/EditTextTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,32 +76,37 @@
 
         <EditText
             android:id="@+id/editTextPost"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Your post here.."
-            android:theme="@style/EditTextTheme"
             android:maxLength="2200"
+            android:layout_marginStart="16dp"
+            android:theme="@style/EditTextTheme"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/post_length"
             tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:theme="@style/MyButtonTheme"
+            android:text="Submit"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTag"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:theme="@style/MyButtonTheme"
-        android:text="Submit"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/div"
-        tools:ignore="MissingConstraints" />
+
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
@@ -98,7 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submit_button">
+        app:layout_constraintTop_toBottomOf="@+id/div">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"

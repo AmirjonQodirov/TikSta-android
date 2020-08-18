@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#FF0000</color>
+    <color name="colorPrimaryDark">#688B6A</color>
 <!--    #7232F2</color>-->
-    //4.#4F2C7E
-    //2.#AF62FE
-    //1.#854798
-    <color name="colorAccent">#F7A5AB</color>
-    <color name="colorAccentSwitch">#AA0000</color>
+<!--    //4.#4F2C7E-->
+<!--    //2.#AF62FE-->
+<!--    //1.#854798-->
+    <color name="colorAccent">#A5BAA6</color>
+    <color name="colorAccentSwitch">#838E75</color>
 </resources>
+
+
+<!--blue-->
+<!--    #0066FF-->
+<!--    #A5C0F7-->
+<!--    #007AAA-->
+
+<!--lazury-->
+<!--    #01AA66-->
+<!--    #AADDC9-->
+<!--    #CE67A68D-->
+
+<!--violet-->
+<!--    #8A19FF-->
+<!--    #CFBDE1-->
+<!--    #3F116E-->
+
+<!--orange-->
+<!--    #F7864A-->
+<!--    #FDCEB5-->
+<!--    #FBA97E-->
+
+<!--ancient_green-->
+<!--    #688B6A-->
+<!--    #A5BAA6-->
+<!--    #838E75-->
+
+<!--specific_orange_pink-->
+<!--    #B34955-->
+<!--    #FDC6CC-->
+<!--    #9F515A-->
