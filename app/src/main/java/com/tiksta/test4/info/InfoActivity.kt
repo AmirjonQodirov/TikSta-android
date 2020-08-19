@@ -14,7 +14,6 @@ import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import com.tiksta.test4.R
 import com.tiksta.test4.base.BaseActivity
 
-
 class InfoActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +35,7 @@ class InfoActivity : BaseActivity() {
             .build()
         adLoader.loadAd(AdRequest.Builder().build())
     }
+
     fun mapUnifiedNativeAdToLayout(
         adFromGoogle: UnifiedNativeAd,
         myAdView: UnifiedNativeAdView
@@ -91,19 +91,30 @@ class InfoActivity : BaseActivity() {
         myAdView.setNativeAd(adFromGoogle)
     }
 
-    fun gitMuhammad(view: View) {
-        goToUrl ( "http://github.com/MrHakimov/");
+    fun gitMuhammadjon(view: View) {
+        goToUrl("http://github.com/MrHakimov/")
     }
 
     fun gitAmir(view: View) {
-        goToUrl ( "http://github.com/AmirjonQodirov/");
+        goToUrl("http://github.com/AmirjonQodirov/")
     }
-    fun mailAmir(view: View){
-        goToUrl("mailto:amirqodirov8383@gmail.com")
+
+    fun gitBehruz(view: View) {
+        goToUrl("http://github.com/MansurovB-source/")
     }
-    fun mailMuhammad(view: View){
+
+    fun mailMuhammadjon(view: View) {
         goToUrl("mailto:hakimov0777@gmail.com")
     }
+
+    fun mailAmir(view: View) {
+        goToUrl("mailto:amirqodirov8383@gmail.com")
+    }
+
+    fun mailBehruz(view: View) {
+        goToUrl("mailto:bekha.m2000.bm@gmail.com")
+    }
+
     private fun goToUrl(url: String) {
         val uriUrl: Uri = Uri.parse(url)
         val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)

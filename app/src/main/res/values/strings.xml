@@ -3,4 +3,5 @@
     <string name="tiktok">TikTok</string>
     <string name="instagram">Instagram</string>
     <string name="post_length_text">Want us to consider the length of your post in our calculations?</string>
+    <string name="max_ad_counter">6</string>
 </resources>

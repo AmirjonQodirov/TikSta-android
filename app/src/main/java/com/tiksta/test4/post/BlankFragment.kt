@@ -26,6 +26,7 @@ import com.google.android.gms.ads.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.tiksta.test4.R
+import com.tiksta.test4.post.ad_counter.AdCounterDatabase
 import com.tiksta.test4.post.data.DatabaseAccess
 import com.tiksta.test4.post.data.MyAsyncTaskMain
 import kotlinx.android.synthetic.main.activity_post_filling.*
@@ -575,7 +576,16 @@ class BlankFragment : Fragment() {
             super.onPostExecute(result)
             progressDialog.dismiss()
 
-            if (interstitialAd.isLoaded) {
+            val db = context?.let { it -> AdCounterDatabase(it) }
+            var show = interstitialAd.isLoaded
+
+            show = if (db == null) {
+                false
+            } else {
+                show and db.increaseCounter()
+            }
+
+            if (show) {
                 interstitialAd.show()
             }
 

@@ -82,7 +82,7 @@
                             android:layout_margin="2dp"
                             android:background="@drawable/div2"
                             android:clickable="true"
-                            android:onClick="gitMuhammad"
+                            android:onClick="gitMuhammadjon"
                             android:padding="4dp"
                             android:text="github.com/MrHakimov"
                             android:textColor="@android:color/holo_blue_dark" />
@@ -118,7 +118,7 @@
                             android:layout_margin="2dp"
                             android:background="@drawable/div2"
                             android:clickable="true"
-                            android:onClick="gitAmir"
+                            android:onClick="gitBehruz"
                             android:padding="4dp"
                             android:text="github.com/MansurovB-source"
                             android:textColor="@android:color/holo_blue_dark" />
@@ -163,6 +163,23 @@
                     tools:layout_editor_absoluteX="16dp">
 
                     <TableRow
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/div2"
+                        android:padding="2dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_margin="2dp"
+                            android:clickable="true"
+                            android:onClick="mailMuhammadjon"
+                            android:text="hakimov0777@gmail.com"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textSize="12sp" />
+                    </TableRow>
+
+                    <TableRow
                         android:layout_marginBottom="2dp"
                         android:background="@drawable/div2"
                         android:padding="2dp"
@@ -192,8 +209,8 @@
                             android:layout_width="match_parent"
                             android:layout_margin="2dp"
                             android:clickable="true"
-                            android:onClick="mailMuhammad"
-                            android:text="hakimov0777@gmail.com"
+                            android:onClick="mailBehruz"
+                            android:text="bekha.m2000.bm@gmail.com"
                             android:textColor="@android:color/holo_blue_dark"
                             android:textSize="12sp" />
                     </TableRow>
