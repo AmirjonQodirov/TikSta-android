@@ -46,7 +46,7 @@
                 android:background="@drawable/div"
                 android:padding="12dp"
                 app:layout_constraintBottom_toTopOf="@+id/feedback"
-                app:layout_constraintTop_toTopOf="aboutUs">
+                >
 
                 <TextView
                     android:id="@+id/about"
@@ -134,8 +134,7 @@
                 android:layout_marginTop="32dp"
                 android:background="@drawable/div"
                 android:padding="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/image"
-                app:layout_constraintTop_toTopOf="aboutUs"
+                app:layout_constraintBottom_toTopOf="@+id/native_ad"
                 >
 
                 <TextView
@@ -201,19 +200,17 @@
                 </TableLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@id/image"
+
+            <FrameLayout
+                android:id="@+id/native_ad"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_marginTop="4dp"
-                android:scaleType="center"
-                android:src="@drawable/ad"
-                app:layout_constraintDimensionRatio="4:3"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/feedback" />  
+                app:layout_constraintTop_toBottomOf="@+id/feedback"
+                android:layout_margin="8dp"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

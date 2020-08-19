@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tiksta.test4">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,6 +23,16 @@
         <activity android:name=".post.PostActivity" />
         <activity android:name=".blog.BlogActivity" />
         <activity android:name=".info.InfoActivity" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2826377510399475~8690512309"/>
+
+
+        <meta-data
+            android:name="com.google.android.gms.ads.MANAGER_APP"
+            android:value="true"
+        />
+
     </application>
 
 </manifest>

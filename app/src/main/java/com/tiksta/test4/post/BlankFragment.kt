@@ -22,6 +22,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.ads.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.tiksta.test4.R
@@ -45,6 +46,7 @@ class BlankFragment : Fragment() {
     private var hasTag: TreeMap<String, Boolean> = TreeMap()
     private var allTags: ArrayList<String> = ArrayList()
     private var hashTagsCount = 0
+    private lateinit var interstitialAd: InterstitialAd
 
     private fun addChipsToGroup() {
         chipGroup.removeAllViews()
@@ -338,7 +340,6 @@ class BlankFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         Utils.setConsiderPostLength(false)
         Utils.setTag(null)
         Utils.setPost(null)
@@ -364,6 +365,20 @@ class BlankFragment : Fragment() {
         val postText: EditText = view.findViewById(R.id.editTextPost)
         val postDisplay: SwitchCompat = view.findViewById(R.id.post_display)
         val submitButton: Button = view.findViewById(R.id.submit_button)
+
+        MobileAds.initialize(context)
+        val mAdView = view.findViewById<AdView>(R.id.adViewPostActivity)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        interstitialAd = InterstitialAd(context)
+        interstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        interstitialAd.loadAd(AdRequest.Builder().build())
+        interstitialAd.adListener = object: AdListener() {
+            override fun onAdClosed() {
+                interstitialAd.loadAd(AdRequest.Builder().build())
+            }
+        }
 
         postLength.setOnCheckedChangeListener { _, considerPostLength ->
             if (considerPostLength) {
@@ -559,6 +574,10 @@ class BlankFragment : Fragment() {
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             progressDialog.dismiss()
+
+            if (interstitialAd.isLoaded) {
+                interstitialAd.show()
+            }
 
             copyToClipboard.visibility =
                 if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
