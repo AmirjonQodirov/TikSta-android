@@ -5,28 +5,24 @@
         android:id="@+id/action_home"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_home"
-        android:iconTint="@color/colorAccent"
-        android:title="Home"
+        android:title="@string/home"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_post"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_post_add"
-        android:iconTint="@color/colorAccent"
-        android:title="Post"
+        android:title="@string/post"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_blog"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_blog"
-        android:iconTint="@color/colorAccent"
-        android:title="Blog"
+        android:title="@string/blog"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_info"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_info"
-        android:iconTint="@color/colorAccent"
-        android:title="Info"
+        android:title="@string/info"
         app:showAsAction="ifRoom" />
 </menu>

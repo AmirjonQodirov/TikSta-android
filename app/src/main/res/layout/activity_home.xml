@@ -1,6 +1,5 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,6 +16,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize"
         android:foregroundGravity="center_horizontal">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -25,9 +25,10 @@
                 android:id="@+id/logo"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:src="@drawable/logo2"
                 android:layout_marginLeft="36dp"
                 android:layout_marginRight="36dp"
+                android:contentDescription="@string/tiksta"
+                android:src="@drawable/logo"
                 app:layout_constraintDimensionRatio="200:121"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,68 +38,69 @@
                 android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/div_gray_background"
+                android:padding="8dp"
+                android:text="@string/tiksta_main_description"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:background="@drawable/div"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:padding="8dp"
-                android:layout_margin="8dp"
-                android:text="TikSta is a smart application which will help you to choose the best hashtags for your posts even considering the limits set by TikTok and Instagram for the length of the post and, of course, the length of your post if you paste it."
-                android:textColor="@android:color/black"
-                app:layout_constraintTop_toBottomOf="@id/logo"
-                />
+                app:layout_constraintTop_toBottomOf="@id/logo" />
 
             <LinearLayout
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="2:1"
-                app:layout_constraintTop_toBottomOf="@id/desc"
-                android:weightSum="2"
                 android:layout_margin="8dp"
-                >
+                android:weightSum="2"
+                app:layout_constraintDimensionRatio="2:1"
+                app:layout_constraintTop_toBottomOf="@id/desc">
+
                 <ImageView
                     android:id="@+id/logoTikTok"
-                    android:src="@drawable/ttok"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    android:clickable="true"
-                    android:onClick="clickTikTok"
-                />
-                <ImageView
-                    android:layout_marginStart="4dp"
-                    android:id="@+id/logoInstagram"
-                    android:src="@drawable/ins"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:onClick="clickInstagram"
+                    android:contentDescription="@string/tiktok"
+                    android:focusable="true"
+                    android:onClick="clickTikTok"
+                    android:src="@drawable/ttok"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/logoInstagram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:contentDescription="@string/instagram"
+                    android:focusable="true"
+                    android:onClick="clickInstagram"
+                    android:src="@drawable/ins"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/desc_blog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/div_gray_background"
+                android:padding="8dp"
+                android:text="@string/blog_description"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:background="@drawable/div"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:padding="8dp"
-                android:layout_margin="8dp"
-                android:text="We also run a blog, where we post some interesting advices on how to run and promote your TikTok and Instagram accounts. There you can find hashtags for different topics or top trending and most posted and viewed hashtags."
-                android:textColor="@android:color/black"
-                app:layout_constraintTop_toBottomOf="@id/image"
-                />
+                app:layout_constraintTop_toBottomOf="@id/image" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

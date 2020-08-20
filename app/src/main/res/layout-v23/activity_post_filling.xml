@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/div"
+        android:background="@drawable/div_gray_background"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="29dp">
 
@@ -20,14 +19,13 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Search hashtags"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
             android:layout_margin="8dp"
             android:layout_marginBottom="0dp"
+            android:text="@string/search_hashtags"
+            android:textColor="@android:color/black"
             android:textSize="25sp"
-            app:layout_constraintTop_toTopOf="parent"/>
-
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/post_length"
@@ -35,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:layout_marginBottom="0dp"
-            android:theme="@style/MySwitch"
+            android:text="@string/consider_post_length"
             android:textSize="16sp"
-            android:text="Consider the length of your post in our calculations?"
+            android:theme="@style/MySwitch"
             android:thumbTint="@color/colorPrimary"
             android:trackTint="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,11 +47,11 @@
             android:id="@+id/post_display"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:layout_margin="12dp"
             android:layout_marginBottom="0dp"
+            android:text="@string/display_post_along_with_hashtags"
+            android:textSize="16sp"
             android:theme="@style/MySwitch"
-            android:text="Display post along with hashtags?"
             android:thumbTint="@color/colorPrimary"
             android:trackTint="@color/colorPrimary"
             android:visibility="gone"
@@ -65,22 +63,25 @@
             android:id="@+id/editTextTag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="hashtag/theme here..."
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/hashtag_theme_here"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
             android:theme="@style/EditTextTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/post_display"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toBottomOf="@id/post_display" />
 
         <EditText
             android:id="@+id/editTextPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Your post here.."
-            android:maxLength="2200"
             android:layout_marginStart="16dp"
+            android:hint="@string/your_post_here"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:maxLength="2200"
             android:theme="@style/EditTextTheme"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,18 +95,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
-            android:theme="@style/MyButtonTheme"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textColor="@android:color/white"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:theme="@style/MyButtonTheme"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextTag"
             tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
@@ -114,9 +114,8 @@
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintTop_toBottomOf="@id/div"
         app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintTop_toBottomOf="@id/div">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
@@ -131,16 +130,15 @@
             tools:layout_editor_absoluteX="0dp">
 
         </com.google.android.material.chip.ChipGroup>
-
     </HorizontalScrollView>
 
     <Button
         android:id="@+id/copyToClipboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="copy"
+        android:text="@string/copy"
         android:theme="@style/MyButtonTheme"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.952"
@@ -152,12 +150,12 @@
         android:id="@+id/div2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
+        android:background="@drawable/div_gray_background"
         android:padding="5dp"
-        android:background="@drawable/div"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/horizontalScrollView">
@@ -166,9 +164,9 @@
             android:id="@+id/resultWithHashTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="2dp"
             android:ems="10"
             android:gravity="start|top"
+            android:padding="2dp"
             android:textColor="@android:color/black"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -177,9 +175,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.488" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

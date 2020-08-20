@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tiksta.test4">
+    package="com.tiksta.pro">
 
     <application
         android:allowBackup="true"
@@ -10,18 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden">
-        <activity android:name=".blog.BlogPage"
-            android:parentActivityName=".blog.BlogActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-        <activity android:name=".home.HomeActivity">
+        <activity android:name="com.tiksta.pro.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".post.PostActivity" />
-        <activity android:name=".blog.BlogActivity" />
-        <activity android:name=".info.InfoActivity" />
+        <activity android:name="com.tiksta.pro.post.PostActivity" />
+        <activity android:name="com.tiksta.pro.blog.BlogActivity" />
+        <activity android:name="com.tiksta.pro.info.InfoActivity" />
+        <activity android:name="com.tiksta.pro.blog.BlogPage"
+            android:parentActivityName="com.tiksta.pro.blog.BlogActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
     </application>
 

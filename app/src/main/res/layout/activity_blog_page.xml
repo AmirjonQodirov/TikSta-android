@@ -1,234 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_material_light">
+    android:background="@android:color/white">
 
-
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content"
+        tools:context=".blog.BlogPage">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".blog.BlogPage"
-            >
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".blog.BlogPage">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/tags"
-                app:layout_constraintTop_toTopOf="parent"
+            <TextView
+                android:id="@+id/tiktok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_horizontal"
+                android:text="@string/hashtags_for_tiktok"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.058"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollViewBlogPageTikTok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:context=".blog.BlogPage"
-                >
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tiktok">
 
-                <TextView
-                    android:id="@+id/tiktok"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupBlogPageTikTok"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center_horizontal"
-                    android:text="Hashtags for TikTok:"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.077"
+                    tools:layout_editor_absoluteX="0dp" />
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/copyToClipboardBlogPageTikTok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/copy"
+                android:theme="@style/MyButtonTheme"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.952"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/div2BlogPageTikTok"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/div2BlogPageTikTok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/div_gray_background"
+                android:padding="5dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewBlogPageTikTok">
+
+                <TextView
+                    android:id="@+id/resultWithHashTagsBlogPageTikTok"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:padding="2dp"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.058"
+                    app:layout_constraintHorizontal_bias="0.466"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:layout_constraintVertical_bias="0.488" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <HorizontalScrollView
-                    android:id="@+id/horizontalScrollViewBlogPageTikTok"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tiktok">
+            <Button
+                android:id="@+id/backListTikTok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recover_all_hashtags"
+                android:theme="@style/MyButtonTheme"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/instagram"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tiktok"
+                app:layout_constraintVertical_bias="0.0" />
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroupBlogPageTikTok"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintVertical_bias="0.077"
-                        tools:layout_editor_absoluteX="0dp">
 
-                    </com.google.android.material.chip.ChipGroup>
+            <TextView
+                android:id="@+id/instagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:gravity="center_horizontal"
+                android:text="@string/hashtags_for_instagram"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.064"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/copyToClipboardBlogPageTikTok" />
 
-                </HorizontalScrollView>
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollViewBlogPageInstagram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/instagram">
 
-                <Button
-                    android:id="@+id/copyToClipboardBlogPageTikTok"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupBlogPageInstagram"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="copy"
-                    android:theme="@style/MyButtonTheme"
-                    android:visibility="visible"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.952"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/div2BlogPageTikTok"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.077"
+                    tools:layout_editor_absoluteX="0dp" />
+            </HorizontalScrollView>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/div2BlogPageTikTok"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/div"
-                    android:padding="5dp"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewBlogPageTikTok">
+            <Button
+                android:id="@+id/copyToClipboardBlogPageInstagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/copy"
+                android:theme="@style/MyButtonTheme"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.952"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/div2BlogPageInstagram"
+                app:layout_constraintVertical_bias="0.0" />
 
-                    <TextView
-                        android:id="@+id/resultWithHashTagsBlogPageTikTok"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:padding="2dp"
-                        android:textColor="@android:color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.466"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.488" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <Button
-                    android:id="@+id/backListTikTok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Recover all hashtags"
-                    android:visibility="gone"
-                    android:theme="@style/MyButtonTheme"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/instagram"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tiktok"
-                    app:layout_constraintVertical_bias="0.0" />
-
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/div2BlogPageInstagram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/div_gray_background"
+                android:padding="5dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewBlogPageInstagram">
 
                 <TextView
-                    android:id="@+id/instagram"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/resultWithHashTagsBlogPageInstagram"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
-                    android:gravity="center_horizontal"
-                    android:text="Hashtags for Instagram:"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:padding="2dp"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.064"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/copyToClipboardBlogPageTikTok" />
-
-                <HorizontalScrollView
-                    android:id="@+id/horizontalScrollViewBlogPageInstagram"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/instagram"
-
-                    >
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroupBlogPageInstagram"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintVertical_bias="0.077"
-                        tools:layout_editor_absoluteX="0dp">
-
-                    </com.google.android.material.chip.ChipGroup>
-
-                </HorizontalScrollView>
-
-                <Button
-                    android:id="@+id/copyToClipboardBlogPageInstagram"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="copy"
-                    android:theme="@style/MyButtonTheme"
-                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.952"
+                    app:layout_constraintHorizontal_bias="0.466"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/div2BlogPageInstagram"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/div2BlogPageInstagram"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/div"
-                    android:padding="5dp"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewBlogPageInstagram">
-
-                    <TextView
-                        android:id="@+id/resultWithHashTagsBlogPageInstagram"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:padding="2dp"
-                        android:textColor="@android:color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.466"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.488" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <Button
-                    android:id="@+id/backListInstagram"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Recover all hashtags"
-                    android:visibility="gone"
-                    android:theme="@style/MyButtonTheme"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/instagram"
-                    app:layout_constraintVertical_bias="0.0" />
-
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.488" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/backListInstagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recover_all_hashtags"
+                android:theme="@style/MyButtonTheme"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/instagram"
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -11,6 +11,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="8dp"
+        android:contentDescription="@string/hashtag_icon"
         android:src="@drawable/hashtag"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,12 +24,11 @@
         android:layout_margin="8dp"
         android:layout_marginEnd="72dp"
         android:textColor="@android:color/black"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="BlogExample" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

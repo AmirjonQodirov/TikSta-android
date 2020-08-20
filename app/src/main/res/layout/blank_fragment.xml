@@ -4,15 +4,14 @@
     android:id="@+id/frameLayoutOur"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tiksta.test4.post.BlankFragment">
+    tools:context="com.tiksta.pro.post.BlankFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize"
-        >
+        android:layout_marginBottom="?attr/actionBarSize">
 
         <include
             layout="@layout/activity_post_filling"
