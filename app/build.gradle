@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.tiksta.test4"
+        applicationId "com.tiksta.pro"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
