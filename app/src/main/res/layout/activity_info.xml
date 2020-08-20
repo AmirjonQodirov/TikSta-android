@@ -134,7 +134,7 @@
                 android:layout_marginTop="32dp"
                 android:background="@drawable/div"
                 android:padding="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/native_ad"
+                app:layout_constraintTop_toBottomOf="@id/devs"
                 >
 
                 <TextView
@@ -217,16 +217,6 @@
                 </TableLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <FrameLayout
-                android:id="@+id/native_ad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/feedback"
-                android:layout_margin="8dp"
-                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -22,15 +22,11 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.gms.ads.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.tiksta.test4.R
-import com.tiksta.test4.post.ad_counter.AdCounterDatabase
 import com.tiksta.test4.post.data.DatabaseAccess
-import com.tiksta.test4.post.data.MyAsyncTaskMain
 import kotlinx.android.synthetic.main.activity_post_filling.*
-import kotlinx.android.synthetic.main.progress_dialog.*
 import java.lang.Character.isWhitespace
 import java.lang.Character.toLowerCase
 import java.util.*
@@ -47,7 +43,6 @@ class BlankFragment : Fragment() {
     private var hasTag: TreeMap<String, Boolean> = TreeMap()
     private var allTags: ArrayList<String> = ArrayList()
     private var hashTagsCount = 0
-    private lateinit var interstitialAd: InterstitialAd
 
     private fun addChipsToGroup() {
         chipGroup.removeAllViews()
@@ -368,20 +363,6 @@ class BlankFragment : Fragment() {
         val submitButton: Button = view.findViewById(R.id.submit_button)
 
 
-        val mAdView = view.findViewById<AdView>(R.id.adViewPostActivity)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
-
-        MobileAds.initialize(context)
-
-        interstitialAd = InterstitialAd(context)
-        interstitialAd.adUnitId = "ca-app-pub-2632952731797743/6900694586"
-        interstitialAd.loadAd(AdRequest.Builder().build())
-        interstitialAd.adListener = object: AdListener() {
-            override fun onAdClosed() {
-                interstitialAd.loadAd(AdRequest.Builder().build())
-            }
-        }
 
         postLength.setOnCheckedChangeListener { _, considerPostLength ->
             if (considerPostLength) {
@@ -578,18 +559,6 @@ class BlankFragment : Fragment() {
             super.onPostExecute(result)
             progressDialog.dismiss()
 
-            val db = context?.let { it -> AdCounterDatabase(it) }
-            var show = interstitialAd.isLoaded
-
-            show = if (db == null) {
-                false
-            } else {
-                show and db.increaseCounter()
-            }
-
-            if (show) {
-                interstitialAd.show()
-            }
 
             copyToClipboard.visibility =
                 if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE
