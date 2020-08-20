@@ -21,7 +21,7 @@ class InfoActivity : BaseActivity() {
 
         MobileAds.initialize(this)
 
-        val adLoader = AdLoader.Builder(this, "ca-app-pub-3940256099942544/2247696110")
+        val adLoader = AdLoader.Builder(this, "ca-app-pub-2632952731797743/6205919385")
             .forUnifiedNativeAd { unifiedNativeAd -> //the native ad will be available inside this method  (unifiedNativeAd)
                 val unifiedNativeAdView = layoutInflater.inflate(
                     R.layout.native_ad_layout,

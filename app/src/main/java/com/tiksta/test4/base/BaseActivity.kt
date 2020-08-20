@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tiksta.test4.R
 import com.tiksta.test4.blog.BlogActivity
@@ -18,7 +19,6 @@ abstract class BaseActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(this.layoutId)
-
         navigationView = findViewById<View>(R.id.navigation) as BottomNavigationView
         navigationView!!.setOnNavigationItemSelectedListener(this)
     }

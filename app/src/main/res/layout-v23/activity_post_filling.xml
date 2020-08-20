@@ -53,7 +53,7 @@
             android:layout_margin="12dp"
             android:layout_marginBottom="0dp"
             android:theme="@style/MySwitch"
-            android:text="Display post along hashtags?"
+            android:text="Display post along with hashtags?"
             android:thumbTint="@color/colorPrimary"
             android:trackTint="@color/colorPrimary"
             android:visibility="gone"
@@ -116,7 +116,7 @@
         ads:adSize="BANNER"
         android:layout_margin="12dp"
         app:layout_constraintTop_toBottomOf="@id/div"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        ads:adUnitId="ca-app-pub-2632952731797743/1639988418">
     </com.google.android.gms.ads.AdView>
 
 

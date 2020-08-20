@@ -163,7 +163,7 @@
                     tools:layout_editor_absoluteX="16dp">
 
                     <TableRow
-                        android:layout_marginTop="2dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/div2"
                         android:padding="2dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -180,7 +180,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:layout_marginBottom="2dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/div2"
                         android:padding="2dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -199,7 +199,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:layout_marginTop="2dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/div2"
                         android:padding="2dp"
                         app:layout_constraintEnd_toEndOf="parent"

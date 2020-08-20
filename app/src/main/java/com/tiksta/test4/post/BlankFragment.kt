@@ -367,13 +367,15 @@ class BlankFragment : Fragment() {
         val postDisplay: SwitchCompat = view.findViewById(R.id.post_display)
         val submitButton: Button = view.findViewById(R.id.submit_button)
 
-        MobileAds.initialize(context)
+
         val mAdView = view.findViewById<AdView>(R.id.adViewPostActivity)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
+        MobileAds.initialize(context)
+
         interstitialAd = InterstitialAd(context)
-        interstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        interstitialAd.adUnitId = "ca-app-pub-2632952731797743/6900694586"
         interstitialAd.loadAd(AdRequest.Builder().build())
         interstitialAd.adListener = object: AdListener() {
             override fun onAdClosed() {
