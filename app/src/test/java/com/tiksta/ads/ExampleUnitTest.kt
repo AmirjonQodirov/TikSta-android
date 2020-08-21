@@ -1,4 +1,4 @@
-package com.tiksta.pro
+package com.tiksta.ads
 
 import org.junit.Test
 

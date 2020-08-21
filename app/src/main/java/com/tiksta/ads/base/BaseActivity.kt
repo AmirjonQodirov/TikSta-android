@@ -1,4 +1,4 @@
-package com.tiksta.pro.base
+package com.tiksta.ads.base
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.tiksta.pro.R
-import com.tiksta.pro.blog.BlogActivity
-import com.tiksta.pro.home.HomeActivity
-import com.tiksta.pro.info.InfoActivity
-import com.tiksta.pro.post.PostActivity
+import com.tiksta.ads.R
+import com.tiksta.ads.blog.BlogActivity
+import com.tiksta.ads.home.HomeActivity
+import com.tiksta.ads.info.InfoActivity
+import com.tiksta.ads.post.PostActivity
 
 abstract class BaseActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {

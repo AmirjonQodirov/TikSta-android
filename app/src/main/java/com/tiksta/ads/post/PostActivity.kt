@@ -1,11 +1,11 @@
-package com.tiksta.pro.post
+package com.tiksta.ads.post
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.tiksta.pro.R
-import com.tiksta.pro.base.BaseActivity
+import com.tiksta.ads.R
+import com.tiksta.ads.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_post_tabs.*
 
 class PostActivity : BaseActivity() {

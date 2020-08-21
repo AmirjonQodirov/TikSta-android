@@ -1,9 +1,9 @@
-package com.tiksta.pro.post.data
+package com.tiksta.ads.post.data
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.tiksta.pro.post.Utils
+import com.tiksta.ads.post.Utils
 
 class DatabaseAccess(context: Context) {
     private var openHelper: SQLiteOpenHelper = DatabaseOpenHelper(context)

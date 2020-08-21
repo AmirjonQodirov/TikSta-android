@@ -105,15 +105,29 @@
             tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewPostActivity"
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        android:layout_margin="12dp"
+        app:layout_constraintTop_toBottomOf="@id/div"
+        ads:adUnitId="ca-app-pub-2632952731797743/1639988418">
+    </com.google.android.gms.ads.AdView>
+
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/adViewPostActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/div">
+        >
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
@@ -121,7 +135,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/submit_button"
             app:layout_constraintVertical_bias="0.077"

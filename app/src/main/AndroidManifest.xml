@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tiksta.pro">
-
+    package="com.tiksta.ads">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,18 +11,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden">
-        <activity android:name="com.tiksta.pro.home.HomeActivity">
+        <activity android:name="com.tiksta.ads.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tiksta.pro.post.PostActivity" />
-        <activity android:name="com.tiksta.pro.blog.BlogActivity" />
-        <activity android:name="com.tiksta.pro.info.InfoActivity" />
-        <activity android:name="com.tiksta.pro.blog.BlogPage"
-            android:parentActivityName="com.tiksta.pro.blog.BlogActivity"
+        <activity android:name="com.tiksta.ads.post.PostActivity" />
+        <activity android:name="com.tiksta.ads.blog.BlogActivity" />
+        <activity android:name="com.tiksta.ads.info.InfoActivity" />
+        <activity android:name="com.tiksta.ads.blog.BlogPage"
+            android:parentActivityName="com.tiksta.ads.blog.BlogActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2632952731797743~2841195924"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 

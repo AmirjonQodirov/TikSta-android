@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.tiksta.pro"
+        applicationId "com.tiksta.ads"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
@@ -46,6 +46,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.0-alpha06'
     implementation 'com.r0adkll:slidableactivity:2.1.0'
     implementation 'com.android.support:multidex:1.0.3'
-
     implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+    implementation 'com.google.android.gms:play-services-ads:19.3.0'
 }

@@ -1,8 +1,10 @@
-package com.tiksta.pro.blog
+package com.tiksta.ads.blog
 
-data class Blog(var name: String,
-                var listOfTagsTikTok: Array<String>,
-                var listOfTagsInstagram: Array<String>){
+data class Blog(
+    var name: String,
+    var listOfTagsTikTok: Array<String>,
+    var listOfTagsInstagram: Array<String>
+) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

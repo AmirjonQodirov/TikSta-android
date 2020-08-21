@@ -1,11 +1,11 @@
-package com.tiksta.pro.blog
+package com.tiksta.ads.blog
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tiksta.pro.base.BaseActivity
-import com.tiksta.pro.R
+import com.tiksta.ads.base.BaseActivity
+import com.tiksta.ads.R
 import kotlinx.android.synthetic.main.activity_blog.*
 
 // Save scroll position

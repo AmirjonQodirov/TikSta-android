@@ -1,4 +1,4 @@
-package com.tiksta.pro.post
+package com.tiksta.ads.post
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -22,10 +22,12 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.ads.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.tiksta.pro.R
-import com.tiksta.pro.post.data.DatabaseAccess
+import com.tiksta.ads.R
+import com.tiksta.ads.post.data.AdCounterDatabase
+import com.tiksta.ads.post.data.DatabaseAccess
 import kotlinx.android.synthetic.main.activity_post_filling.*
 import java.lang.Character.isWhitespace
 import java.lang.Character.toLowerCase
@@ -42,6 +44,7 @@ class BlankFragment : Fragment() {
     private var hasTag: TreeMap<String, Boolean> = TreeMap()
     private var allTags: ArrayList<String> = ArrayList()
     private var hashTagsCount = 0
+    private lateinit var interstitialAd: InterstitialAd
 
     private fun addChipsToGroup() {
         chipGroup.removeAllViews()
@@ -339,6 +342,21 @@ class BlankFragment : Fragment() {
         val postDisplay: SwitchCompat = view.findViewById(R.id.post_display)
         val submitButton: Button = view.findViewById(R.id.submit_button)
 
+        val mAdView = view.findViewById<AdView>(R.id.adViewPostActivity)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        MobileAds.initialize(context)
+
+        interstitialAd = InterstitialAd(context)
+        interstitialAd.adUnitId = "ca-app-pub-2632952731797743/6900694586"
+        interstitialAd.loadAd(AdRequest.Builder().build())
+        interstitialAd.adListener = object : AdListener() {
+            override fun onAdClosed() {
+                interstitialAd.loadAd(AdRequest.Builder().build())
+            }
+        }
+
         postLength.setOnCheckedChangeListener { _, considerPostLength ->
             if (considerPostLength) {
                 postText.visibility = View.VISIBLE
@@ -351,7 +369,11 @@ class BlankFragment : Fragment() {
 
         submitButton.setOnClickListener {
             if (platform.isEmpty()) {
-                Toast.makeText(view?.context, getString(R.string.no_hashtags_found), Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    view?.context,
+                    getString(R.string.no_hashtags_found),
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             } else if (initialCheck()) {
                 progressDialog = ProgressDialog(activity)
@@ -387,6 +409,7 @@ class BlankFragment : Fragment() {
                 )
             }
         }
+
 
         return view
     }
@@ -491,6 +514,19 @@ class BlankFragment : Fragment() {
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             progressDialog.dismiss()
+
+            val db = context?.let { it -> AdCounterDatabase(it) }
+            var show = interstitialAd.isLoaded
+
+            show = if (db == null) {
+                false
+            } else {
+                show and db.increaseCounter()
+            }
+
+            if (show) {
+                interstitialAd.show()
+            }
 
             copyToClipboard.visibility =
                 if (Utils.isCopyToClipboardVisible()) View.VISIBLE else View.GONE

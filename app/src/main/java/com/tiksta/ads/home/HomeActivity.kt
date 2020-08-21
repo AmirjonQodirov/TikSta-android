@@ -1,10 +1,10 @@
-package com.tiksta.pro.home
+package com.tiksta.ads.home
 
 import android.content.Intent
 import android.view.View
-import com.tiksta.pro.R
-import com.tiksta.pro.base.BaseActivity
-import com.tiksta.pro.post.PostActivity
+import com.tiksta.ads.R
+import com.tiksta.ads.base.BaseActivity
+import com.tiksta.ads.post.PostActivity
 
 
 class HomeActivity : BaseActivity() {

@@ -50,4 +50,11 @@
     <string name="mail_muhammadjon_url">mailto:hakimov0777@gmail.com</string>
     <string name="mail_amirjon_url">mailto:amirqodirov8383@gmail.com</string>
     <string name="mail_behruz_url">mailto:bekha.m2000.bm@gmail.com</string>
+    <string name="header_of_ad">Header of Ad</string>
+    <string name="headline">headline</string>
+    <string name="advertiser">advertiser</string>
+    <string name="body_of_ad">body of ad</string>
+    <string name="price">price</string>
+    <string name="store">store</string>
+    <string name="action">Action</string>
 </resources>

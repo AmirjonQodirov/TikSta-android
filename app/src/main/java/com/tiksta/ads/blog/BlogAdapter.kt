@@ -1,10 +1,10 @@
-package com.tiksta.pro.blog
+package com.tiksta.ads.blog
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tiksta.pro.R
+import com.tiksta.ads.R
 import kotlinx.android.synthetic.main.blog_item.view.*
 
 class BlogAdapter(

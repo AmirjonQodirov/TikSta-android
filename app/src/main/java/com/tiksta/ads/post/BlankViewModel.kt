@@ -1,4 +1,4 @@
-package com.tiksta.pro.post
+package com.tiksta.ads.post
 
 import androidx.lifecycle.ViewModel
 
