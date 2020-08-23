@@ -2,7 +2,7 @@
 
 ## Application information
 
-TikSta is a smart application with convenient user interface which will help users to choose the most relevant and trending hashtags for their posts even considering the limits set by TikTok and Instagram for the length of the post and, of course, the length of their post if they paste it
+TikSta is a smart application with convenient user interface which will help to choose the most relevant and trending hashtags for posts even considering the limits set by TikTok and Instagram for the length of the post and, of course, the length of users' post if they paste it
 
 It also has a blog, where we post some interesting groups of hashtags which will exactly help users to promote their TikTok and Instagram accounts. There users can find hashtags for different topics or top trending and most posted and viewed hashtags.
 
