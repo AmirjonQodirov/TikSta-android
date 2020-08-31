@@ -1,5 +1,7 @@
 # TikSta
 
+**Responsive website repository:** [github.com/MrHakimov/tags-app](https://github.com/MrHakimov/tags-app)
+
 ## Application information
 
 TikSta is a smart application with convenient user interface which will help to choose the most relevant and trending hashtags for posts even considering the limits set by TikTok and Instagram for the length of the post and, of course, the length of users' post if they paste it
