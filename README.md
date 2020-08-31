@@ -1,4 +1,4 @@
-# TikSta-android
+# TikSta
 
 ## Application information
 
